@@ -170,6 +170,15 @@
   color: #b7c8d8;
 }
 
+.policyButton {
+  border: 0;
+  background: transparent;
+  color: #b7c8d8;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
 .deniedBackdrop {
   position: fixed;
   inset: 0;

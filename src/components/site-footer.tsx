@@ -58,6 +58,10 @@ export function SiteFooter() {
     setShowDenied(true);
   };
 
+  const handleOpenCookiePreferences = () => {
+    window.dispatchEvent(new Event("open-cookie-preferences"));
+  };
+
   return (
     <>
       <footer className={styles.footer}>
@@ -169,6 +173,10 @@ export function SiteFooter() {
               />
             </a>
             <div className={styles.policyRow}>
+              <button type="button" className={styles.policyButton} onClick={handleOpenCookiePreferences}>
+                Cookie Preferences
+              </button>
+              <span aria-hidden="true">•</span>
               <Link href="/privacy-policy">Privacy Policy</Link>
               <span aria-hidden="true">•</span>
               <Link href="/cookie-policy">Cookie Policy</Link>

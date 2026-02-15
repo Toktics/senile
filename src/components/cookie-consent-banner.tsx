@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/components/cookie-consent-banner.module.css";
 
 type ConsentState = {
@@ -41,6 +41,14 @@ export function CookieConsentBanner() {
     }
     return !readConsent();
   });
+
+  useEffect(() => {
+    const openPreferences = () => setOpen(true);
+    window.addEventListener("open-cookie-preferences", openPreferences);
+    return () => {
+      window.removeEventListener("open-cookie-preferences", openPreferences);
+    };
+  }, []);
 
   const acceptAll = () => {
     writeConsent({
