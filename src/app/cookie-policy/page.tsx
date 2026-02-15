@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import styles from "@/components/room-pages.module.css";
+
+export const metadata: Metadata = {
+  title: "Cookie Policy",
+  description:
+    "Cookie and browser storage policy, including essential progression storage for returning S.E.N.I.L.E. visitors.",
+  alternates: { canonical: "/cookie-policy" },
+};
 
 export default function CookiePolicyPage() {
   return (

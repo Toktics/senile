@@ -253,7 +253,7 @@ export function GraphicNovelDivisionExperience() {
             <div className={styles.coverWrap}>
               <Image
                 src="/images/graphic novels/volume-1.webp"
-                alt="Volume 1 cover placeholder"
+                alt="Volume 1 cover: The Odd Sock Conspiracy"
                 width={900}
                 height={1350}
                 className={styles.coverImage}
@@ -308,7 +308,7 @@ export function GraphicNovelDivisionExperience() {
             <div className={styles.coverWrap}>
               <Image
                 src="/images/graphic novels/volume-2.webp"
-                alt="Volume 2 cover placeholder"
+                alt="Case 001 cover: The Kettle Desynchronisation Event"
                 width={800}
                 height={1200}
                 className={styles.coverImage}

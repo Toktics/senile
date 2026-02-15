@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { siteCopy } from "@/content/archive-data";
 import styles from "@/components/room-pages.module.css";
+
+export const metadata: Metadata = {
+  title: "Recruitment Terminal",
+  description:
+    "Submit a provisional field operative application for archive updates, containment notices, and authorised briefings.",
+  alternates: { canonical: "/recruitment-terminal" },
+};
 
 export default function RecruitmentTerminalPage() {
   return (

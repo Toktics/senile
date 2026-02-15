@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { RoomGate } from "@/components/room-gate";
 import { characters } from "@/content/archive-data";
 import styles from "@/components/room-pages.module.css";
+
+export const metadata: Metadata = {
+  title: "Agent Registry",
+  description: "Personnel dossiers, clearance notes, and assignment logs from the S.E.N.I.L.E. registry.",
+  alternates: { canonical: "/agent-registry" },
+};
 
 export default function AgentRegistryPage() {
   return (

@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import styles from "@/components/room-pages.module.css";
+
+export const metadata: Metadata = {
+  title: "Terms & Conditions",
+  description: "Terms governing access and use of the S.E.N.I.L.E. Interactive Archive.",
+  alternates: { canonical: "/terms-and-conditions" },
+};
 
 export default function TermsAndConditionsPage() {
   return (

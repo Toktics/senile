@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import styles from "@/components/room-pages.module.css";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy policy for the S.E.N.I.L.E. Interactive Archive and related services.",
+  alternates: { canonical: "/privacy-policy" },
+};
 
 export default function PrivacyPolicyPage() {
   return (

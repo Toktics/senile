@@ -1,0 +1,88 @@
+.banner {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 120;
+  border: 1px solid #4b6278;
+  background:
+    linear-gradient(rgba(10, 18, 26, 0.96), rgba(8, 15, 22, 0.96)),
+    radial-gradient(circle at 20% 0%, rgba(73, 116, 151, 0.18), transparent 48%);
+  color: #dce7f1;
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.5rem;
+  box-shadow: 0 14px 34px rgba(2, 6, 10, 0.45);
+}
+
+.label {
+  margin: 0;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  font-size: 0.68rem;
+  color: #9fc8e8;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-rajdhani), "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+.copy {
+  margin: 0;
+  line-height: 1.45;
+  color: #c8d5e0;
+  max-width: 72ch;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.primary,
+.secondary {
+  border: 1px solid #88b4d8;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.65rem;
+  cursor: pointer;
+}
+
+.primary {
+  background: rgba(59, 106, 141, 0.28);
+  color: #d9ecfd;
+}
+
+.secondary {
+  background: rgba(11, 20, 28, 0.7);
+  color: #a8c4db;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  color: #9fb5c7;
+  font-size: 0.78rem;
+}
+
+.links a {
+  color: #bfe1ff;
+}
+
+@media (min-width: 980px) {
+  .banner {
+    left: auto;
+    right: 1.2rem;
+    width: min(620px, calc(100vw - 2.4rem));
+  }
+}
+
