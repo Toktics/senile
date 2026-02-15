@@ -1,0 +1,638 @@
+.corridorPage {
+  --wall: #cbc6ba;
+  --wall-shadow: #b6b1a6;
+  --line: #8f8a80;
+  --ink: #3a3b3c;
+  min-height: calc(100vh - 120px);
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, #cfcabf 0 11%, #c8c3b7 11% 74%, #b9b4a8 74% 100%);
+  position: relative;
+  overflow: visible;
+}
+
+.corridorPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 92px, rgba(86, 83, 76, 0.08) 92px 94px),
+    repeating-linear-gradient(180deg, transparent 0 92px, rgba(86, 83, 76, 0.08) 92px 94px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.contentWrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 1.4rem 1rem 2.6rem;
+}
+
+.ceilingLight {
+  margin: 0 auto 1.1rem;
+  width: min(640px, 92%);
+  height: 34px;
+  border: 1px solid #8f8c85;
+  background: linear-gradient(180deg, #f4f3ef, #d4d2cb);
+  box-shadow: 0 0 30px rgba(250, 248, 238, 0.35);
+}
+
+.upperBand {
+  height: 20px;
+  margin-bottom: 1.3rem;
+  background: linear-gradient(180deg, #aaa59a, #b8b3a8);
+  border-top: 1px solid #8f8a80;
+  border-bottom: 1px solid #9d988d;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1.1rem;
+}
+
+.logoBlend {
+  width: min(300px, 72vw);
+  height: auto;
+  filter: grayscale(1) contrast(0.85);
+  opacity: 0.62;
+}
+
+.stageGrid {
+  display: grid;
+  grid-template-columns: minmax(500px, 600px) minmax(300px, 420px);
+  gap: 2.6rem;
+  align-items: start;
+  margin-bottom: 1.2rem;
+}
+
+.doorZone {
+  --frame-width: 72%;
+  --strip-width: calc((100% - var(--frame-width)) / 2);
+  --scanner-width: 34px;
+  --status-inset: 0.38rem;
+  border: 1px solid #9a958a;
+  background: linear-gradient(180deg, #c7c2b6, #b8b3a7);
+  padding: 1rem;
+  position: relative;
+}
+
+.plaque {
+  margin: 0 auto 0.85rem;
+  width: fit-content;
+  border: 1px solid #8f8466;
+  background: #5b5550;
+  color: #d0b980;
+  padding: 0.3rem 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.doorFrame {
+  position: relative;
+  border: 2px solid #8e8a80;
+  background: #bfbaae;
+  padding: 0.32rem;
+  width: var(--frame-width);
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.doorFrame::before {
+  content: "";
+  position: absolute;
+  inset: 0.32rem;
+  border: 1px solid rgba(109, 106, 99, 0.34);
+  background:
+    linear-gradient(180deg, rgba(231, 235, 239, 0.24), rgba(128, 138, 146, 0.18)),
+    repeating-linear-gradient(180deg, rgba(86, 95, 103, 0.14) 0 18px, transparent 18px 36px),
+    linear-gradient(135deg, rgba(82, 92, 101, 0.28), rgba(117, 128, 137, 0.18));
+  opacity: 0;
+  transition: opacity 280ms ease;
+  z-index: 0;
+}
+
+.doorFrameOpen::before {
+  opacity: 0.9;
+}
+
+.door {
+  border: 1px solid #7d786f;
+  background: linear-gradient(180deg, #b9b4a8, #aba599);
+  min-height: 560px;
+  position: relative;
+  width: 84%;
+  margin: 0 auto;
+  transition: transform 420ms ease;
+  transform-origin: left center;
+  z-index: 1;
+}
+
+.doorOpen {
+  transform: translateX(34%);
+}
+
+.window {
+  width: 60%;
+  height: 128px;
+  border: 1px solid #747068;
+  background: linear-gradient(180deg, #b7c0c4, #98a3a9);
+  margin: 1rem auto 0;
+}
+
+.handle {
+  position: absolute;
+  left: 0.9rem;
+  top: 224px;
+  width: 16px;
+  height: 82px;
+  border: 1px solid #6d6961;
+  background: linear-gradient(180deg, #d2d0cb, #939088);
+}
+
+.keypadButton {
+  position: absolute;
+  left: calc((var(--strip-width) - var(--scanner-width)) / 2);
+  right: auto;
+  top: 186px;
+  width: var(--scanner-width);
+  min-height: 96px;
+  border: 1px solid #4b5960;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #1b252b, #253138);
+  color: transparent;
+  padding: 0;
+  cursor: pointer;
+  z-index: 4;
+  transition: box-shadow 220ms ease;
+}
+
+.keypadButton::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #43a7df;
+  box-shadow: 0 0 10px rgba(75, 180, 235, 0.7);
+}
+
+.keypadButton:focus-visible {
+  outline: 2px solid #43a7df;
+  outline-offset: 2px;
+}
+
+.keypadButtonScanning::after {
+  box-shadow: 0 0 16px rgba(75, 180, 235, 0.95);
+}
+
+.keypadButtonValidated::after {
+  background: #47c77a;
+  box-shadow: 0 0 14px rgba(71, 199, 122, 0.86);
+}
+
+.keypadStatus {
+  position: absolute;
+  left: var(--status-inset);
+  right: auto;
+  top: 292px;
+  width: calc(var(--strip-width) - (var(--status-inset) * 2) + 0.28rem);
+  min-height: 118px;
+  border: 1px solid #626058;
+  background: rgba(235, 231, 221, 0.92);
+  padding: 0.35rem 0.32rem;
+  display: grid;
+  gap: 0.24rem;
+  align-content: start;
+  z-index: 3;
+}
+
+.keypadStatusLabel {
+  margin: 0;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5a5650;
+}
+
+.keypadStatusText {
+  margin: 0;
+  font-size: 0.64rem;
+  line-height: 1.3;
+  color: #3f3d37;
+  overflow-wrap: anywhere;
+}
+
+.keypadAction {
+  border: 1px solid #6a6860;
+  background: rgba(235, 231, 221, 0.9);
+  color: #35332f;
+  font-size: 0.58rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.18rem;
+  cursor: pointer;
+}
+
+.keypadActionPrimary {
+  border: 1px solid #4f5f6b;
+  background: rgba(78, 102, 122, 0.2);
+  color: #2f2e2b;
+  font-size: 0.59rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.23rem 0.18rem;
+  cursor: pointer;
+}
+
+.introPanel {
+  border: 1px solid #9b978d;
+  background: rgba(245, 242, 235, 0.82);
+  padding: 1rem 1rem 1.1rem;
+  display: grid;
+  gap: 0.72rem;
+  align-content: start;
+  margin-left: 0.8rem;
+}
+
+.introTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.introLogoMark {
+  width: 54px;
+  height: 54px;
+  filter: grayscale(1) contrast(0.85);
+  opacity: 0.78;
+}
+
+.introPanel h1 {
+  font-size: clamp(1.25rem, 2.3vw, 1.72rem);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.metaLine {
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  color: #6e6b63;
+  margin: 0;
+}
+
+.leadLine {
+  font-size: clamp(1.35rem, 2.1vw, 1.82rem);
+  line-height: 1.28;
+}
+
+.supportLine {
+  font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+}
+
+.introPanel p {
+  margin: 0;
+  line-height: 1.42;
+}
+
+.moduleStack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.overviewBlock {
+  border: 1px solid rgba(114, 109, 99, 0.42);
+  padding: 0.82rem 0.9rem;
+  display: grid;
+  gap: 0.48rem;
+}
+
+.moduleA {
+  background: rgba(240, 236, 228, 0.76);
+}
+
+.moduleB {
+  background: rgba(234, 229, 220, 0.78);
+}
+
+.moduleC {
+  background: rgba(228, 222, 213, 0.78);
+}
+
+.moduleD {
+  background: rgba(239, 234, 226, 0.76);
+}
+
+.moduleE {
+  background: rgba(232, 227, 218, 0.8);
+}
+
+.moduleF {
+  background: rgba(226, 220, 211, 0.8);
+}
+
+.overviewBlock h2 {
+  font-size: 1.12rem;
+  letter-spacing: 0.02em;
+}
+
+.structureList {
+  margin: 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.18rem;
+}
+
+.structureLayout {
+  display: grid;
+  grid-template-columns: minmax(210px, 280px) 1fr;
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.structureDiagram {
+  border: 1px dashed rgba(122, 116, 105, 0.55);
+  background: rgba(239, 236, 228, 0.6);
+  padding: 0.5rem 0.6rem 0.65rem;
+  margin-top: -1.05rem;
+}
+
+.diagramTitle {
+  font-family: var(--font-rajdhani), "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 0.45rem;
+}
+
+.diagramCanvas {
+  position: relative;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.nodeTop,
+.nodeMid,
+.nodeBottom {
+  border: 1px solid rgba(118, 112, 102, 0.62);
+  background: rgba(246, 243, 236, 0.82);
+  text-align: center;
+  padding: 0.3rem 0.35rem;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.nodeTop,
+.nodeBottom {
+  width: min(260px, 86%);
+  justify-self: center;
+}
+
+.nodeMidRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.36rem;
+  position: relative;
+}
+
+.nodeMidRow::before {
+  display: none;
+}
+
+.nodeMidRow::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -0.56rem;
+  bottom: calc(100% - 0.18rem);
+  border-left: 1px solid rgba(116, 111, 101, 0.65);
+}
+
+.nodeBottom {
+  position: relative;
+}
+
+.nodeBottom::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -0.42rem;
+  height: 0.42rem;
+  border-left: 1px solid rgba(116, 111, 101, 0.65);
+}
+
+.protocolGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.protocolGrid p {
+  border: 1px solid rgba(120, 115, 105, 0.45);
+  background: rgba(239, 236, 229, 0.68);
+  padding: 0.38rem 0.5rem;
+  font-size: 0.86rem;
+}
+
+.doctrineLines {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.founderGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.founderCard {
+  border: 1px solid rgba(120, 115, 105, 0.5);
+  background: rgba(244, 241, 233, 0.88);
+  color: inherit;
+  text-align: left;
+  padding: 0.45rem;
+  display: grid;
+  gap: 0.18rem;
+  cursor: pointer;
+}
+
+.founderCardActive {
+  border-color: #6b7d8b;
+  box-shadow: inset 0 0 0 1px rgba(67, 167, 223, 0.32);
+}
+
+.founderPortrait {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(93, 89, 81, 0.5);
+  background: rgba(214, 210, 200, 0.8);
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+}
+
+.founderName {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.founderRole {
+  font-size: 0.75rem;
+  color: #5f5b53;
+}
+
+.founderDetail {
+  border: 1px solid rgba(115, 110, 100, 0.5);
+  background: rgba(243, 240, 232, 0.9);
+  padding: 0.55rem 0.65rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.founderDetailImageWrap {
+  border: 1px solid rgba(116, 111, 101, 0.48);
+  background: rgba(248, 246, 241, 0.86);
+  padding: 0.32rem;
+  margin-bottom: 0.2rem;
+}
+
+.founderDetailImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.founderDetail h3 {
+  font-size: 0.95rem;
+}
+
+.timelineRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.timelineCard {
+  border: 1px dashed rgba(122, 116, 105, 0.55);
+  background: rgba(239, 236, 228, 0.68);
+  padding: 0.45rem;
+  display: grid;
+  gap: 0.35rem;
+  justify-items: center;
+}
+
+.timelineImageWrap {
+  width: 100%;
+  border: 1px dashed rgba(120, 115, 105, 0.32);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  padding: 0.2rem;
+  min-height: 120px;
+}
+
+.timelineImage {
+  width: 100%;
+  height: auto;
+  max-height: 118px;
+  object-fit: contain;
+}
+
+.timelineYear {
+  margin: 0;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: #56524a;
+}
+
+@media (max-width: 760px) {
+  .stageGrid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .doorZone {
+    --frame-width: 82%;
+    --scanner-width: 26px;
+    --status-inset: 0.28rem;
+    order: 1;
+  }
+
+  .introPanel {
+    order: 2;
+  }
+
+  .door {
+    min-height: 430px;
+    width: 86%;
+  }
+
+  .doorFrame {
+    width: var(--frame-width);
+  }
+
+  .window {
+    height: 102px;
+    margin-top: 0.9rem;
+  }
+
+  .handle {
+    top: 182px;
+    height: 72px;
+  }
+
+  .keypadButton {
+    left: calc((var(--strip-width) - var(--scanner-width)) / 2);
+    right: auto;
+    top: 148px;
+    width: var(--scanner-width);
+    min-height: 76px;
+  }
+
+  .keypadStatus {
+    left: var(--status-inset);
+    right: auto;
+    top: 236px;
+    width: calc(var(--strip-width) - (var(--status-inset) * 2) + 0.2rem);
+    min-height: 104px;
+    padding: 0.3rem 0.25rem;
+  }
+
+  .founderGrid,
+  .protocolGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .structureLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .structureDiagram {
+    margin-top: 0;
+  }
+
+  .nodeMidRow {
+    grid-template-columns: 1fr;
+  }
+
+  .nodeMidRow::before,
+  .nodeMidRow::after {
+    display: none;
+  }
+
+  .timelineRow {
+    grid-template-columns: 1fr;
+  }
+}

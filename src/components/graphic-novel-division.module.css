@@ -1,0 +1,589 @@
+.page {
+  --bgBlend: 0;
+  --paperOpacity: 0;
+  --chromeOpacity: 1;
+  --gutterOpacity: 0;
+  --cardBlend: 0;
+  --inkBlend: 0;
+  color: #d8e2ec;
+}
+
+.archiveHeader {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 1.2rem clamp(1rem, 2.5vw, 2.5rem) 0.6rem;
+}
+
+.archiveHeaderInner {
+  border: 1px solid #3b4d5f;
+  background:
+    linear-gradient(rgba(11, 17, 23, 0.78), rgba(11, 17, 23, 0.78)),
+    url("/images/ui/ui-folder-card-texture.webp");
+  background-size: cover;
+  padding: 1rem;
+}
+
+.kicker {
+  margin: 0 0 0.2rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  color: #9fc8e8;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.archiveHeaderInner h1 {
+  margin: 0;
+  font-family: var(--font-rajdhani), "Avenir Next", "Segoe UI", sans-serif;
+  font-size: clamp(1.62rem, 2.8vw, 2.2rem);
+  letter-spacing: 0.02em;
+}
+
+.archiveHeaderInner p {
+  margin: 0.45rem 0 0;
+  color: #b2bfcc;
+  max-width: 54ch;
+}
+
+.motionHeader {
+  max-width: 75rem;
+  margin: 0.6rem auto 0;
+  padding: 0 clamp(1rem, 2.5vw, 2.5rem);
+}
+
+.motionViewport {
+  position: relative;
+  border: 1px solid #45607a;
+  overflow: hidden;
+  min-height: clamp(210px, 31vw, 360px);
+  background: #0f1a26;
+}
+
+.motionImageTrack {
+  position: absolute;
+  inset: -8% 0;
+  will-change: transform;
+  transition: transform 80ms linear;
+}
+
+.motionImage {
+  object-fit: cover;
+  filter: saturate(0.95) contrast(1.02);
+}
+
+.motionViewport::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(9, 12, 16, 0.36), rgba(8, 12, 17, 0.5)),
+    radial-gradient(circle at 20% 20%, rgba(182, 171, 151, 0.13), transparent 44%);
+  pointer-events: none;
+}
+
+.hintHotspot {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  width: 220px;
+  height: 62px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.speechBubble,
+.speechBubbleSmall {
+  position: absolute;
+  display: block;
+  border: 1px solid #8ea8bf;
+  background: rgba(247, 245, 236, 0.94);
+  color: #31363c;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-align: left;
+  padding: 0.46rem 0.55rem;
+  max-width: 270px;
+  box-shadow: 0 12px 30px rgba(6, 10, 16, 0.28);
+}
+
+.speechBubble {
+  left: 0;
+  bottom: 0;
+}
+
+.booksAboutSection {
+  max-width: 75rem;
+  margin: 0.7rem auto 0;
+  padding: 0 clamp(1rem, 2.5vw, 2.5rem);
+}
+
+.booksAboutInner {
+  border: 1px solid #6c5a44;
+  background:
+    linear-gradient(rgba(26, 20, 14, 0.2), rgba(20, 15, 10, 0.2)),
+    url("/images/graphic novels/paper-texture.webp");
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    inset 0 0 0 1px rgba(248, 235, 206, 0.2),
+    0 10px 28px rgba(5, 8, 12, 0.2);
+  color: #201a13;
+  padding: 1rem clamp(0.9rem, 2vw, 1.45rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.booksAboutLead h2 {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-rajdhani), "Avenir Next", "Segoe UI", sans-serif;
+  font-size: clamp(1.48rem, 2.5vw, 2.1rem);
+  line-height: 1.07;
+  color: #15110d;
+}
+
+.booksAboutLead p,
+.booksAboutBody p {
+  margin: 0 0 0.72rem;
+  line-height: 1.46;
+  font-size: 1rem;
+  font-family: var(--font-rajdhani), "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.booksAboutBody {
+  padding-top: clamp(3.92rem, 5.8vw, 4.95rem);
+}
+
+.booksListBlock {
+  color: #2e261d;
+}
+
+.booksClose {
+  margin-top: 1rem;
+  font-size: 1.18rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #14100d;
+}
+
+.transitionShell {
+  position: relative;
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 1rem clamp(1rem, 2.5vw, 2.5rem) 2rem;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #07101a calc((1 - var(--bgBlend)) * 100%), #b8b1a3 calc(var(--bgBlend) * 100%)) 0%,
+      color-mix(in srgb, #08131f calc((1 - var(--bgBlend)) * 100%), #ece7da calc(var(--bgBlend) * 100%)) 100%
+    );
+}
+
+.transitionShell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    url("/images/graphic novels/paper-texture.webp"),
+    repeating-linear-gradient(
+      0deg,
+      rgba(34, 39, 44, calc(var(--gutterOpacity) * 0.2)) 0 1px,
+      transparent 1px 96px
+    );
+  opacity: calc(var(--paperOpacity) * 0.5);
+  pointer-events: none;
+}
+
+.chromeWatermark {
+  position: absolute;
+  right: clamp(1.4rem, 3vw, 2.7rem);
+  top: 0.8rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: rgba(158, 183, 207, calc(var(--chromeOpacity) * 0.45));
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.volumeGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.volumePanel {
+  border: 1px solid
+    color-mix(
+      in srgb,
+      #3f5770 calc((1 - var(--cardBlend)) * 100%),
+      #7f776a calc(var(--cardBlend) * 100%)
+    );
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(
+        in srgb,
+        rgba(10, 17, 24, 0.9) calc((1 - var(--cardBlend)) * 100%),
+        rgba(240, 233, 218, 0.96) calc(var(--cardBlend) * 100%)
+      ),
+      color-mix(
+        in srgb,
+        rgba(8, 14, 20, 0.92) calc((1 - var(--cardBlend)) * 100%),
+        rgba(228, 220, 203, 0.96) calc(var(--cardBlend) * 100%)
+      )
+    );
+  box-shadow:
+    0 8px 24px rgba(5, 9, 14, calc(0.24 - (var(--cardBlend) * 0.12))),
+    inset 0 0 0 1px rgba(255, 255, 255, calc(0.04 + (var(--cardBlend) * 0.04)));
+  padding: 0.95rem;
+  display: grid;
+  gap: 0.72rem;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100%;
+}
+
+.volumeHead h2 {
+  margin: 0;
+  font-family: var(--font-rajdhani), "Avenir Next", "Segoe UI", sans-serif;
+  font-size: clamp(1.15rem, 1.8vw, 1.56rem);
+  color: color-mix(
+    in srgb,
+    #dce8f2 calc((1 - var(--inkBlend)) * 100%),
+    #19130e calc(var(--inkBlend) * 100%)
+  );
+}
+
+.volumeMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-bottom: 0.2rem;
+}
+
+.volumeCode {
+  margin: 0;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: color-mix(
+    in srgb,
+    #9fc8e8 calc((1 - var(--inkBlend)) * 100%),
+    #5a4634 calc(var(--inkBlend) * 100%)
+  );
+}
+
+.volumeStatus {
+  margin: 0;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: color-mix(
+    in srgb,
+    #9fc8e8 calc((1 - var(--inkBlend)) * 100%),
+    #5a4634 calc(var(--inkBlend) * 100%)
+  );
+  text-align: right;
+}
+
+.volumeStatus span {
+  color: color-mix(
+    in srgb,
+    #ffffff calc((1 - var(--inkBlend)) * 100%),
+    #211910 calc(var(--inkBlend) * 100%)
+  );
+}
+
+.coverWrap {
+  position: relative;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      #4b6782 calc((1 - var(--cardBlend)) * 100%),
+      #8b7f70 calc(var(--cardBlend) * 100%)
+    );
+  overflow: hidden;
+  aspect-ratio: 1 / 1.15;
+  background: color-mix(
+    in srgb,
+    #111a25 calc((1 - var(--cardBlend)) * 100%),
+    #d9cdb9 calc(var(--cardBlend) * 100%)
+  );
+}
+
+.coverImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hintHotspotSmall {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  width: 180px;
+  height: 58px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.speechBubbleSmall {
+  left: 0;
+  top: 0;
+  max-width: 230px;
+}
+
+.volumeSummary,
+.redactedText {
+  margin: 0;
+  color: color-mix(
+    in srgb,
+    #d1dde8 calc((1 - var(--inkBlend)) * 100%),
+    #33281d calc(var(--inkBlend) * 100%)
+  );
+  line-height: 1.46;
+}
+
+.redactedText {
+  position: relative;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+}
+
+.redactionOverlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(rgba(8, 13, 18, 0.2), rgba(8, 13, 18, 0.35));
+  pointer-events: none;
+}
+
+.redactionOverlay span {
+  border: 1px solid #b85c67;
+  color: #f3d2d6;
+  background: rgba(62, 23, 29, 0.82);
+  padding: 0.28rem 0.58rem;
+  letter-spacing: 0.07em;
+  font-size: 0.76rem;
+}
+
+.volumePanel:hover .redactedText {
+  animation: redactionFlicker 1.8s ease-in-out infinite;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.primaryCta,
+.secondaryCta,
+.linkCta,
+.closeCta,
+.readerNav {
+  border: 1px solid
+    color-mix(
+      in srgb,
+      #88b4d8 calc((1 - var(--cardBlend)) * 100%),
+      #6f614f calc(var(--cardBlend) * 100%)
+    );
+  background: color-mix(
+    in srgb,
+    rgba(20, 34, 47, 0.9) calc((1 - var(--cardBlend)) * 100%),
+    rgba(233, 224, 207, 0.92) calc(var(--cardBlend) * 100%)
+  );
+  color: color-mix(
+    in srgb,
+    #d5e7f7 calc((1 - var(--inkBlend)) * 100%),
+    #2f2418 calc(var(--inkBlend) * 100%)
+  );
+  padding: 0.5rem 0.78rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.primaryCta {
+  font-family: var(--font-rajdhani), "Avenir Next", "Segoe UI", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.secondaryCta {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.linkCta {
+  background: transparent;
+  border-color: color-mix(
+    in srgb,
+    #597792 calc((1 - var(--cardBlend)) * 100%),
+    #736350 calc(var(--cardBlend) * 100%)
+  );
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+}
+
+.readerDrawer {
+  margin-top: 1rem;
+  border: 1px solid color-mix(in srgb, #4a6780 55%, #7d705f 45%);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11, 19, 27, 0.88),
+      rgba(9, 16, 23, 0.92)
+    );
+  padding: 0.9rem;
+  display: none;
+  gap: 0.8rem;
+}
+
+.readerDrawerOpen {
+  display: grid;
+}
+
+.readerHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+
+.readerKicker {
+  margin: 0 0 0.2rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9fc8e8;
+}
+
+.readerHeader h3 {
+  margin: 0;
+  color: #dce8f2;
+}
+
+.closeCta {
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.78rem;
+}
+
+.readerViewport {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.readerPage {
+  border: 1px solid #4a6780;
+  background: rgba(8, 12, 18, 0.86);
+  padding: 0.36rem;
+  display: grid;
+  justify-items: center;
+}
+
+.readerImage {
+  width: min(100%, 780px);
+  height: auto;
+  display: block;
+}
+
+.readerNav {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.readerFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  color: #c8d4de;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+}
+
+.readerLinks {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.readerLinks a {
+  border: 1px solid #5f7f97;
+  padding: 0.25rem 0.45rem;
+}
+
+@keyframes redactionFlicker {
+  0%,
+  100% {
+    opacity: 0.92;
+  }
+  45% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.86;
+  }
+}
+
+@media (max-width: 980px) {
+  .motionViewport {
+    min-height: clamp(180px, 44vw, 260px);
+  }
+
+  .booksAboutInner {
+    grid-template-columns: 1fr;
+  }
+
+  .booksAboutBody {
+    padding-top: 0;
+  }
+
+  .volumeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .coverWrap {
+    aspect-ratio: 1 / 0.92;
+    max-height: 360px;
+  }
+
+  .readerViewport {
+    grid-template-columns: 1fr;
+  }
+
+  .readerNav {
+    width: 100%;
+    height: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motionImageTrack {
+    transition: none;
+    transform: none !important;
+  }
+
+  .volumePanel:hover .redactedText {
+    animation: none;
+  }
+}

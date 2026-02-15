@@ -1,0 +1,344 @@
+.pageWrap {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 1.2rem clamp(1rem, 2.5vw, 2.5rem) 2.4rem;
+  color: #dae2ea;
+}
+
+.sectionCard {
+  border: 1px solid #3b4d5f;
+  background:
+    linear-gradient(rgba(11, 17, 23, 0.74), rgba(11, 17, 23, 0.74)),
+    url("/images/ui/ui-folder-card-texture.webp");
+  background-size: cover;
+  background-position: center;
+  padding: 1rem;
+}
+
+.openedCasePanel {
+  cursor: zoom-in;
+}
+
+.openedCasePanel :global(img) {
+  cursor: zoom-in;
+}
+
+.sectionIntro {
+  color: #9ba9b8;
+  margin-bottom: 0.8rem;
+}
+
+.openNotice {
+  margin-bottom: 0.7rem;
+  border: 1px solid #5f7f97;
+  background: rgba(32, 61, 84, 0.34);
+  color: #bfe1ff;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.82rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+}
+
+.metaLine {
+  color: #9ba9b8;
+  font-size: 0.82rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+}
+
+.assetFrame {
+  border: 1px solid #3b4d5f;
+  background: rgba(6, 10, 14, 0.8);
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+}
+
+.assetThumb {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.redactionBlock {
+  margin-top: 0.7rem;
+  border: 1px dashed #3b4d5f;
+  padding: 0.6rem;
+  color: #b6c4d2;
+  background: rgba(5, 9, 13, 0.5);
+}
+
+.registryGrid,
+.equipmentGrid,
+.bookGrid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.8rem;
+}
+
+.registryCard,
+.equipmentCard,
+.bookCard {
+  border: 1px solid #3b4d5f;
+  background: rgba(11, 17, 23, 0.75);
+  padding: 1rem;
+}
+
+.cabinetGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+
+.drawerUnit {
+  min-height: 138px;
+}
+
+.drawerFace {
+  width: 100%;
+  height: 100%;
+  min-height: 138px;
+  border: 1px solid #364451;
+  background:
+    linear-gradient(rgba(15, 21, 27, 0.94), rgba(10, 15, 20, 0.94)),
+    url("/images/ui/ui-folder-card-texture.webp");
+  background-size: cover;
+  background-position: center;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+}
+
+button.drawerFace {
+  cursor: pointer;
+}
+
+.drawerLabelFrame {
+  border: 2px solid #8a9aa8;
+  background: rgba(236, 230, 216, 0.9);
+  color: #212428;
+  padding: 0.25rem 0.4rem;
+  min-width: 122px;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.drawerLabelText {
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.drawerMeta {
+  font-size: 0.67rem;
+  line-height: 1.15;
+}
+
+.drawerHandle {
+  width: 62px;
+  height: 13px;
+  border: 2px solid #91a2b1;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #d1dbe4, #8da0b0);
+  box-shadow: inset 0 0 0 2px rgba(14, 18, 23, 0.35);
+}
+
+.deniedBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 11, 0.62);
+  display: grid;
+  place-items: center;
+  z-index: 80;
+}
+
+.deniedModal {
+  border: 1px solid #8e5960;
+  background: rgba(22, 11, 14, 0.96);
+  color: #f0c8cd;
+  padding: 1rem;
+  width: min(360px, calc(100vw - 2rem));
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+}
+
+.deniedLogo {
+  width: 180px;
+  height: auto;
+}
+
+.deniedText {
+  letter-spacing: 0.1em;
+  font-size: 0.92rem;
+}
+
+.deniedSub {
+  color: #e5bfc4;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.deniedClose {
+  border: 1px solid #8e5960;
+  background: transparent;
+  color: #f0c8cd;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+
+.linkRow {
+  margin-top: 0.9rem;
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.linkRow a {
+  border: 1px solid #3b4d5f;
+  padding: 0.35rem 0.65rem;
+  color: #b5d7f9;
+  font-size: 0.85rem;
+}
+
+.recruitmentForm {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.4rem;
+  max-width: 30rem;
+}
+
+.recruitmentLayout {
+  display: grid;
+  grid-template-columns: minmax(320px, 30rem) minmax(220px, 1fr);
+  gap: 1.2rem;
+  align-items: stretch;
+}
+
+.recruitmentLeft {
+  max-width: 30rem;
+}
+
+.recruitmentLeft p {
+  max-width: 30rem;
+}
+
+.recruitmentImprint {
+  border: 1px solid #2d3945;
+  background: rgba(6, 10, 14, 0.32);
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.recruitmentImprintLogo {
+  width: min(70%, 340px);
+  height: auto;
+  filter: grayscale(1) brightness(0.38) contrast(0.9);
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+  transform: translateY(2%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.recruitmentForm label {
+  font-size: 0.8rem;
+  color: #9ba9b8;
+}
+
+.recruitmentForm input,
+.recruitmentForm select,
+.recruitmentForm textarea {
+  border: 1px solid #3b4d5f;
+  background: rgba(3, 6, 9, 0.75);
+  color: #dae2ea;
+  padding: 0.6rem;
+  font: inherit;
+}
+
+.primaryButton,
+.secondaryButton {
+  border: 1px solid #88b4d8;
+  background: transparent;
+  color: #b5d7f9;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.82rem;
+}
+
+.confirmation {
+  margin-top: 0.8rem;
+  color: #b8d8b4;
+}
+
+.gateCard {
+  border: 1px solid #8e5960;
+  background: rgba(22, 11, 14, 0.96);
+  color: #f0c8cd;
+  padding: 1rem;
+  width: min(560px, 100%);
+}
+
+.policyMeta {
+  color: #9ba9b8;
+  font-size: 0.8rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  margin-bottom: 0.8rem;
+}
+
+.policySection {
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid #2f3f4f;
+}
+
+.policySection h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-rajdhani), "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.policySection p {
+  margin: 0 0 0.6rem;
+  line-height: 1.5;
+  color: #d7e1ea;
+}
+
+.policySection ul {
+  margin: 0.4rem 0 0.7rem 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+  color: #d7e1ea;
+}
+
+.policySection li {
+  line-height: 1.45;
+}
+
+@media (max-width: 780px) {
+  .cabinetGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .recruitmentLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .recruitmentLeft,
+  .recruitmentLeft p,
+  .recruitmentForm {
+    max-width: 100%;
+  }
+
+  .recruitmentImprint {
+    min-height: 210px;
+  }
+}

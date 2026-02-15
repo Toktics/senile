@@ -1,0 +1,212 @@
+.topBar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.8rem;
+  align-items: flex-start;
+  padding: 1.2rem clamp(1rem, 2.5vw, 2.5rem);
+  border-bottom: 1px solid #2b3947;
+  background: rgba(13, 21, 30, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}
+
+.brandBlock {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  max-width: 32rem;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.logoWordmark {
+  width: 190px;
+  height: auto;
+}
+
+.brandSub {
+  font-size: 0.82rem;
+  color: #9ba9b8;
+}
+
+.topCenterTitle {
+  justify-self: center;
+  align-self: center;
+  color: #b5d7f9;
+  font-size: 0.86rem;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+}
+
+.headerRight {
+  justify-self: end;
+  display: grid;
+  justify-items: end;
+  gap: 0.45rem;
+}
+
+.bulletinBlock {
+  border-left: 2px solid rgba(181, 215, 249, 0.5);
+  padding-left: 0.6rem;
+  max-width: 26rem;
+}
+
+.bulletinLabel {
+  margin: 0;
+  color: #b5d7f9;
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+}
+
+.bulletin {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  color: #cfe0ef;
+  text-align: right;
+  line-height: 1.32;
+  max-width: 26rem;
+}
+
+.resetSessionButton {
+  border: 1px solid #3b4d5f;
+  background: rgba(9, 15, 22, 0.5);
+  color: #9ba9b8;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.45rem;
+  cursor: pointer;
+}
+
+.mobileMenuButton {
+  display: none;
+}
+
+.navRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0.8rem clamp(1rem, 2.5vw, 2.5rem);
+  border-top: 1px solid #2b3947;
+  border-bottom: 1px solid #2b3947;
+  background: rgba(8, 13, 18, 0.95);
+  z-index: 55;
+  position: sticky;
+  top: 88px;
+}
+
+.navItem {
+  border: 1px solid #3b4d5f;
+  padding: 0.42rem 0.7rem;
+  font-size: 0.8rem;
+  color: #dae2ea;
+  text-decoration: none;
+}
+
+.navActive {
+  border-color: #88b4d8;
+  color: #b5d7f9;
+}
+
+.navLocked {
+  opacity: 0.42;
+}
+
+.deniedBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 11, 0.64);
+  display: grid;
+  place-items: center;
+  z-index: 80;
+}
+
+.deniedModal {
+  border: 1px solid #8e5960;
+  background: rgba(22, 11, 14, 0.96);
+  color: #f0c8cd;
+  padding: 1rem;
+  width: min(360px, calc(100vw - 2rem));
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+}
+
+.deniedLogo {
+  width: 180px;
+  height: auto;
+}
+
+.deniedText {
+  letter-spacing: 0.1em;
+  font-size: 0.92rem;
+}
+
+.deniedSub {
+  color: #e5bfc4;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.deniedClose {
+  border: 1px solid #8e5960;
+  background: transparent;
+  color: #f0c8cd;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .topBar {
+    grid-template-columns: 1fr auto;
+  }
+
+  .topCenterTitle {
+    grid-column: 1 / -1;
+    justify-self: start;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+  }
+
+  .headerRight {
+    display: none;
+  }
+
+  .mobileMenuButton {
+    display: inline-block;
+    border: 1px solid #3b4d5f;
+    background: rgba(9, 15, 22, 0.5);
+    color: #cfe0ef;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+
+  .navRow {
+    display: none;
+    position: static;
+  }
+
+  .navOpen {
+    display: flex;
+  }
+
+  .logoWordmark {
+    width: 150px;
+  }
+
+  .brandSub {
+    font-size: 0.75rem;
+  }
+}
