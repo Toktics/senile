@@ -261,6 +261,15 @@ button.drawerFace {
   font: inherit;
 }
 
+.honeypotField {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .primaryButton,
 .secondaryButton {
   border: 1px solid #88b4d8;

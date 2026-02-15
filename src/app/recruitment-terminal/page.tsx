@@ -10,7 +10,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/recruitment-terminal" },
 };
 
-export default function RecruitmentTerminalPage() {
+type RecruitmentTerminalPageProps = {
+  searchParams?: Promise<{
+    submitted?: string;
+  }>;
+};
+
+export default async function RecruitmentTerminalPage({ searchParams }: RecruitmentTerminalPageProps) {
+  const params = (await searchParams) ?? {};
+  const submitted = params.submitted === "1";
+
   return (
     <main className={styles.pageWrap}>
       <section className={styles.sectionCard}>
@@ -36,6 +45,20 @@ export default function RecruitmentTerminalPage() {
               <input type="hidden" name="_subject" value="SENILE Recruitment" />
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value="/recruitment-terminal?submitted=1" />
+              <input
+                type="hidden"
+                name="_autoresponse"
+                value="Submission received by S.E.N.I.L.E. Intake. Your credentials are now under procedural review."
+              />
+              <input
+                type="text"
+                name="_honey"
+                tabIndex={-1}
+                autoComplete="off"
+                className={styles.honeypotField}
+                aria-hidden="true"
+              />
               <label htmlFor="email">Contact Address (Secure Channel)</label>
               <input id="email" name="email" type="email" required />
 
@@ -67,7 +90,7 @@ export default function RecruitmentTerminalPage() {
               </button>
             </form>
 
-            <p className={styles.confirmation}>{siteCopy.recruitmentConfirmation}</p>
+            {submitted && <p className={styles.confirmation}>{siteCopy.recruitmentConfirmation}</p>}
           </div>
 
           <aside className={styles.recruitmentImprint} aria-hidden="true">
