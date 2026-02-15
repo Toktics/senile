@@ -31,6 +31,7 @@ function readConsent(): ConsentState | null {
 
 function writeConsent(next: ConsentState) {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  window.dispatchEvent(new Event("cookie-consent-change"));
 }
 
 export function CookieConsentBanner() {

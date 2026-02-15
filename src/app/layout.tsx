@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
+import { AnalyticsLoader } from "@/components/analytics-loader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -109,6 +110,7 @@ export default function RootLayout({
           <div className="appContent">{children}</div>
           <SiteFooter />
           <CookieConsentBanner />
+          <AnalyticsLoader />
         </div>
       </body>
     </html>
