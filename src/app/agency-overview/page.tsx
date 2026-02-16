@@ -76,7 +76,7 @@ const logoTimeline = [
 export default function AgencyOverviewPage() {
   const router = useRouter();
   const [validated, setValidated] = useState<boolean>(() => loadArchiveState().agencyValidated);
-  const [doorOpen, setDoorOpen] = useState<boolean>(() => loadArchiveState().agencyValidated);
+  const [doorOpen, setDoorOpen] = useState(false);
   const [scanning, setScanning] = useState(false);
   const [statusMessage, setStatusMessage] = useState(() => {
     const current = loadArchiveState();
@@ -116,6 +116,13 @@ export default function AgencyOverviewPage() {
     }, 900);
   };
 
+  const handleEnterDivision = () => {
+    setDoorOpen(true);
+    window.setTimeout(() => {
+      router.push("/equipment-division");
+    }, 240);
+  };
+
   const activeFounder = founders.find((founder) => founder.id === activeFounderId) ?? founders[0];
 
   return (
@@ -128,37 +135,51 @@ export default function AgencyOverviewPage() {
           <div className={styles.stageGrid}>
             <section className={styles.doorZone} aria-label="Agency corridor entrance">
               <div className={styles.plaque}>Equipment Division</div>
-              <button
-                type="button"
-                className={`${styles.keypadButton} ${scanning ? styles.keypadButtonScanning : ""} ${
-                  validated ? styles.keypadButtonValidated : ""
-                }`}
-                onClick={handleValidate}
-                aria-label="Validate keycard for internal systems"
-                disabled={scanning}
-              >
-                {validated ? "VALIDATED" : "PRESENT KEYCARD"}
-              </button>
-              <div className={styles.keypadStatus}>
-                <p className={styles.keypadStatusLabel}>Internal Reader</p>
-                <p className={styles.keypadStatusText}>{statusMessage}</p>
-                <button type="button" className={styles.keypadAction} onClick={handleValidate} disabled={scanning}>
-                  {scanning ? "Validating..." : validated ? "Validation Confirmed" : "Use Keycard Reader"}
-                </button>
-                {validated && (
+              <div className={styles.doorZoneInner}>
+                <div className={styles.readerColumn}>
                   <button
                     type="button"
-                    className={styles.keypadActionPrimary}
-                    onClick={() => router.push("/equipment-division")}
+                    className={`${styles.keypadButton} ${scanning ? styles.keypadButtonScanning : ""} ${
+                      validated ? styles.keypadButtonValidated : ""
+                    }`}
+                    onClick={handleValidate}
+                    aria-label="Validate keycard for internal systems"
+                    disabled={scanning}
                   >
-                    Enter Equipment Division
+                    {validated ? "VALIDATED" : "PRESENT KEYCARD"}
                   </button>
-                )}
-              </div>
-              <div className={`${styles.doorFrame} ${doorOpen ? styles.doorFrameOpen : ""}`}>
-                <div className={`${styles.door} ${doorOpen ? styles.doorOpen : ""}`}>
-                  <div className={styles.window} aria-hidden="true" />
-                  <div className={styles.handle} aria-hidden="true" />
+                  <div className={styles.keypadStatus}>
+                    <p className={styles.keypadStatusLabel}>Internal Reader</p>
+                    <p className={styles.keypadStatusText}>{statusMessage}</p>
+                    <button type="button" className={styles.keypadAction} onClick={handleValidate} disabled={scanning}>
+                      {scanning ? "Validating..." : validated ? "Validation Confirmed" : "Use Keycard Reader"}
+                    </button>
+                    {validated && (
+                      <button
+                        type="button"
+                        className={styles.keypadActionPrimary}
+                        onClick={handleEnterDivision}
+                      >
+                        Enter Equipment Division
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className={`${styles.doorFrame} ${doorOpen ? styles.doorFrameOpen : ""}`}>
+                  <div className={styles.doorReveal} aria-hidden="true">
+                    <Image
+                      src="/images/scenes/archive-room-wide-v1.webp"
+                      alt=""
+                      fill
+                      sizes="(max-width: 760px) 100vw, 720px"
+                      className={styles.doorRevealImage}
+                    />
+                  </div>
+                  <div className={`${styles.door} ${doorOpen ? styles.doorOpen : ""}`}>
+                    <div className={styles.window} aria-hidden="true" />
+                    <div className={styles.handle} aria-hidden="true" />
+                  </div>
                 </div>
               </div>
             </section>
