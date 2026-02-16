@@ -24,7 +24,7 @@ type CountryNode = {
 
 const countryNodes: CountryNode[] = [
   { id: "usa", label: "USA", top: "36%", left: "18%", agentIds: ["agent-director"] },
-  { id: "mexico", label: "MEXICO", top: "50%", left: "21%" },
+  { id: "mexico", label: "MEXICO", top: "50%", left: "21%", agentIds: ["agent-file-10"] },
   { id: "canada", label: "CANADA", top: "22%", left: "18%", agentIds: ["agent-file-12"] },
   {
     id: "england",
@@ -32,8 +32,8 @@ const countryNodes: CountryNode[] = [
     top: "31%",
     left: "46%",
     agentIds: ["agent-sana", "agent-mt"],
-    labelOffsetX: -26,
-    labelOffsetY: 14,
+    labelOffsetX: -40,
+    labelOffsetY: -16,
   },
   {
     id: "scotland",
@@ -41,8 +41,8 @@ const countryNodes: CountryNode[] = [
     top: "24%",
     left: "45%",
     agentIds: ["agent-martin"],
-    labelOffsetX: -38,
-    labelOffsetY: 6,
+    labelOffsetX: -72,
+    labelOffsetY: 20,
   },
   {
     id: "france",
@@ -50,8 +50,8 @@ const countryNodes: CountryNode[] = [
     top: "37%",
     left: "47%",
     agentIds: ["agent-vale"],
-    labelOffsetX: -18,
-    labelOffsetY: 18,
+    labelOffsetX: -42,
+    labelOffsetY: -8,
   },
   {
     id: "germany",
@@ -63,7 +63,7 @@ const countryNodes: CountryNode[] = [
     labelOffsetY: 14,
   },
   { id: "russia", label: "RUSSIA", top: "23%", left: "64%", agentIds: ["agent-hinge"] },
-  { id: "india", label: "INDIA", top: "54%", left: "67%", agentIds: ["agent-file-10"] },
+  { id: "india", label: "INDIA", top: "54%", left: "67%" },
   { id: "china", label: "CHINA", top: "42%", left: "75%", agentIds: ["agent-ohm"] },
   { id: "australia", label: "AUSTRALIA", top: "73%", left: "83%", agentIds: ["agent-harrow"] },
   { id: "japan", label: "JAPAN", top: "37%", left: "84%", agentIds: ["agent-file-11"] },
@@ -81,6 +81,7 @@ const agentAvatarById: Record<string, string> = {
   "agent-ohm": "/images/agents/7_OHM.webp",
   "agent-harrow": "/images/agents/8_HARROW.webp",
   "agent-director": "/images/agents/9_THE_DIRECTOR.webp",
+  "agent-file-10": "/images/agents/10_PASCAL.webp",
 };
 
 const agentDossierById: Record<string, string> = {
@@ -93,6 +94,7 @@ const agentDossierById: Record<string, string> = {
   "agent-ohm": "/images/agents/7.webp",
   "agent-harrow": "/images/agents/8.webp",
   "agent-director": "/images/agents/9.webp",
+  "agent-file-10": "/images/agents/10-v2.webp",
 };
 
 const CLUSTER_TO_SPREAD_ZOOM = 1.22;

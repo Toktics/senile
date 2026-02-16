@@ -289,8 +289,8 @@ export const characters: Character[] = [
   },
   {
     id: "agent-file-10",
-    name: "Agent File 10",
-    codename: "Archive Liaison",
+    name: "Agent Pascal",
+    codename: "Regional Field Liaison",
     clearanceLevel: "Clearance B",
     psychologicalNotes: "Dossier pending full transcription from updated archive card.",
     knownAssignments: ["Case 010"],
@@ -299,6 +299,12 @@ export const characters: Character[] = [
       "Operational notes withheld pending director review ███",
       "Classified assignment in progress. No further details known ███",
     ],
+    portrait: {
+      src: "/images/agents/10-v2.webp",
+      alt: "S.E.N.I.L.E personnel card for Agent Pascal",
+      width: 1080,
+      height: 1600,
+    },
   },
   {
     id: "agent-file-11",
