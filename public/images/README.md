@@ -4,12 +4,15 @@ Place optimized image assets in these folders using the exact filenames below.
 
 ## Agents (`public/images/agents`)
 
-- `agent-vale-card.webp`
-- `dr-griffiths-card.webp`
-- `agent-kelvin-card.webp`
-- `agent-bragg-card.webp`
-- `agent-hinge-card.webp`
-- `director-card.webp`
+- `1.webp`
+- `2.webp`
+- `3.webp`
+- `4.webp`
+- `5.webp`
+- `6.webp`
+- `7.webp`
+- `8.webp`
+- `9.webp`
 
 ## Cases (`public/images/cases`)
 

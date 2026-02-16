@@ -1,0 +1,397 @@
+.mapSection {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.mapFrame {
+  position: relative;
+  border: 1px solid #4e6780;
+  background: linear-gradient(180deg, rgba(8, 16, 24, 0.96), rgba(10, 20, 30, 0.96));
+  padding: 0.65rem;
+}
+
+.mapToolbar {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid rgba(91, 126, 157, 0.78);
+  background: rgba(8, 16, 24, 0.84);
+  padding: 0.26rem;
+}
+
+.zoomButton,
+.zoomReset {
+  border: 1px solid #5a7da0;
+  background: linear-gradient(180deg, #173047, #122639);
+  color: #b7d8f2;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  cursor: pointer;
+  height: 1.55rem;
+}
+
+.zoomButton {
+  width: 1.55rem;
+}
+
+.zoomReset {
+  padding: 0 0.45rem;
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.zoomReadout {
+  min-width: 3.2rem;
+  text-align: center;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.64rem;
+  color: #b7d8f2;
+}
+
+.mapSurface {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid #2f4358;
+  touch-action: none;
+  cursor: default;
+}
+
+.mapSurfaceDragging {
+  cursor: grabbing;
+}
+
+.mapCanvas {
+  position: absolute;
+  inset: 0;
+  transform-origin: center center;
+  transition: transform 160ms ease;
+  background:
+    radial-gradient(circle at 14% 30%, rgba(112, 144, 175, 0.15), transparent 20%),
+    radial-gradient(circle at 48% 38%, rgba(112, 144, 175, 0.12), transparent 19%),
+    radial-gradient(circle at 76% 43%, rgba(112, 144, 175, 0.15), transparent 22%),
+    radial-gradient(circle at 83% 73%, rgba(112, 144, 175, 0.13), transparent 16%),
+    repeating-linear-gradient(90deg, rgba(59, 92, 119, 0.14) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(180deg, rgba(59, 92, 119, 0.14) 0 1px, transparent 1px 48px),
+    linear-gradient(180deg, #08131f 0%, #0c1f30 100%);
+}
+
+.mapCanvas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 45%, rgba(66, 103, 133, 0.28), transparent 24%),
+    radial-gradient(circle at 50% 42%, rgba(66, 103, 133, 0.24), transparent 20%),
+    radial-gradient(circle at 74% 40%, rgba(66, 103, 133, 0.26), transparent 22%);
+  pointer-events: none;
+}
+
+.nodeWrap {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 0.32rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.nodeMarkers {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  pointer-events: none;
+}
+
+.nodeButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #4f6f8d;
+  background: rgba(6, 11, 18, 0.9);
+  display: grid;
+  place-items: center;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  pointer-events: auto;
+}
+
+.nodeButton:hover {
+  transform: scale(1.06);
+}
+
+.nodeButtonFloating:hover {
+  transform: translate(calc(-50% + var(--offset-x, 0px)), calc(-50% + var(--offset-y, 0px))) scale(1.06);
+}
+
+.nodeButtonActive {
+  border-color: #8ac5f0;
+  box-shadow: 0 0 0 2px rgba(139, 199, 240, 0.32);
+}
+
+.nodeButtonFilled {
+  box-shadow: 0 0 12px rgba(73, 148, 200, 0.35);
+}
+
+.nodeButtonVacant {
+  border-style: dashed;
+  border-color: #4d5b68;
+}
+
+.nodeButtonFloating {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(-50% + var(--offset-x, 0px)), calc(-50% + var(--offset-y, 0px)));
+}
+
+.clusterButton {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 42px;
+  height: 42px;
+  border-width: 2px;
+  border-color: #9cc9ea;
+  box-shadow: 0 0 12px rgba(73, 148, 200, 0.4);
+}
+
+.clusterButton:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.clusterCount {
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+  color: #d0ebff;
+}
+
+.vacantDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #768da3;
+}
+
+.nodePortrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nodeLabel {
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: #b4d6f1;
+  background: rgba(8, 16, 24, 0.84);
+  border: 1px solid rgba(88, 120, 149, 0.7);
+  padding: 0.08rem 0.26rem;
+  pointer-events: none;
+  margin-top: 0.38rem;
+  z-index: 0;
+  transform: translate(var(--label-offset-x, 0px), var(--label-offset-y, 0px));
+}
+
+.nodeLabelActive {
+  border-color: rgba(146, 200, 241, 0.95);
+  color: #d6eeff;
+}
+
+.detailCard {
+  position: relative;
+  border: 1px solid #3b4d5f;
+  background: rgba(10, 17, 24, 0.76);
+  padding: 0.9rem;
+  color: #d6e2ed;
+}
+
+.fileTab {
+  position: absolute;
+  right: 0.9rem;
+  top: -0.86rem;
+  border: 1px solid #5a7da0;
+  background: linear-gradient(180deg, #173047, #122639);
+  color: #b7d8f2;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.67rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+
+.detailMeta {
+  margin: 0 0 0.75rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: #9fc8e8;
+  text-transform: uppercase;
+}
+
+.detailHead {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.55rem;
+}
+
+.detailPortrait {
+  width: 88px;
+  height: 88px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid #5f82a2;
+}
+
+.detailHead h3 {
+  margin: 0 0 0.2rem;
+  font-size: 1.12rem;
+}
+
+.detailRole,
+.detailClearance {
+  margin: 0;
+}
+
+.detailRole {
+  color: #b8d6ee;
+}
+
+.detailClearance {
+  font-size: 0.86rem;
+  color: #9fb4c7;
+}
+
+.detailBody {
+  margin: 0.48rem 0;
+  line-height: 1.42;
+}
+
+.filePreview {
+  border-top: 1px solid rgba(120, 159, 191, 0.3);
+  margin-top: 0.5rem;
+  padding-top: 0.58rem;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+.filePreview p {
+  margin: 0.2rem 0;
+  color: #c3d6e8;
+  line-height: 1.38;
+}
+
+.filePreviewHidden {
+  opacity: 0;
+  transform: translateY(-8px);
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.filePanel {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-12px);
+  clip-path: inset(0 0 100% 0);
+  border-top: 1px solid rgba(120, 159, 191, 0);
+  margin-top: 0;
+  transition:
+    max-height 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 260ms ease,
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    margin-top 220ms ease;
+}
+
+.filePanelOpen {
+  max-height: 2200px;
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0 0 0 0);
+  border-top-color: rgba(120, 159, 191, 0.3);
+  margin-top: 0.5rem;
+  overflow: visible;
+}
+
+.fileImageWrap {
+  border: 1px solid rgba(88, 120, 149, 0.68);
+  background: rgba(6, 11, 18, 0.78);
+  padding: 0.35rem;
+  width: min(100%, 560px);
+  margin: 0 0 0.7rem;
+}
+
+.fileImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.redactionBlock {
+  margin-top: 0.65rem;
+  border: 1px dashed #3b4d5f;
+  padding: 0.55rem;
+  color: #b6c4d2;
+  background: rgba(5, 9, 13, 0.5);
+}
+
+.redactionBlock p {
+  margin: 0.2rem 0;
+}
+
+@media (max-width: 900px) {
+  .mapToolbar {
+    right: 0.72rem;
+    top: 0.72rem;
+  }
+
+  .nodeButton {
+    width: 34px;
+    height: 34px;
+  }
+
+  .nodeLabel {
+    font-size: 0.53rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .mapSurface {
+    aspect-ratio: 1 / 1;
+    max-height: 66vh;
+  }
+
+  .nodeLabel {
+    letter-spacing: 0.04em;
+  }
+
+  .mapToolbar {
+    transform: scale(0.95);
+    transform-origin: top right;
+  }
+
+  .fileTab {
+    top: -0.74rem;
+    font-size: 0.61rem;
+    padding: 0.25rem 0.5rem;
+  }
+}

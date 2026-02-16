@@ -19,17 +19,17 @@ const case001Pages = [
 
 const volume2Pages = [
   "/images/graphic novels/volume-3.webp",
-  "/images/agents/agent-hinge-card.webp",
-  "/images/agents/agent-kelvin-card.webp",
+  "/images/agents/5.webp",
+  "/images/agents/1.webp",
   "/images/equipment/micro-object-recovery-unit-card.png",
-  "/images/agents/director-card.webp",
+  "/images/agents/6.webp",
 ];
 
 const case002Pages = [
   "/images/graphic novels/case-002.webp",
   "/images/equipment/thermal-pillow-stabiliser-card.png",
-  "/images/agents/dr-griffiths-card.webp",
-  "/images/agents/agent-vale-card.webp",
+  "/images/agents/2.webp",
+  "/images/agents/3.webp",
   "/images/equipment/sole-grip-paste-card.png",
 ];
 

@@ -15,6 +15,7 @@ export function ArchiveExperience() {
   const [directorCodeMessage, setDirectorCodeMessage] = useState("");
   const [activeModule, setActiveModule] = useState<"cupboard" | "uv" | "cabinet" | "sublevel" | "memo" | null>(null);
   const [showModuleDenied, setShowModuleDenied] = useState(false);
+  const [anomalySubmitted, setAnomalySubmitted] = useState(false);
   const activeModuleRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -26,6 +27,10 @@ export function ArchiveExperience() {
       const nextUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ""}`;
       window.location.replace(nextUrl);
       return;
+    }
+
+    if (params.get("anomaly_submitted") === "1") {
+      setAnomalySubmitted(true);
     }
   }, []);
 
@@ -217,6 +222,82 @@ export function ArchiveExperience() {
               </button>
             </article>
           </div>
+
+          <article id="anomaly-report" className={styles.anomalyPanel}>
+            <div className={styles.anomalyHeader}>
+              <p className={styles.anomalyAlert}>Unauthorised access event logged. Proceed under controlled protocol.</p>
+              <p className={styles.anomalyStamp}>Agency Notice // Priority Queue</p>
+              <h3>REPORT ANOMALIES</h3>
+              <p className={styles.anomalyLead}>
+                Small disruptions matter.
+                <br />
+                We notice.
+                <br />
+                You notice.
+              </p>
+            </div>
+
+            <form
+              className={styles.anomalyForm}
+              action="https://formsubmit.co/hello@snappyfox.co.uk"
+              method="POST"
+            >
+              <input type="hidden" name="_subject" value="ANOMALIES REPORTED" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value="/?anomaly_submitted=1#anomaly-report" />
+              <input
+                type="text"
+                name="_honey"
+                tabIndex={-1}
+                autoComplete="off"
+                className={styles.honeypotField}
+                aria-hidden="true"
+              />
+
+              <div className={styles.anomalyField}>
+                <label htmlFor="anomaly-name">Name</label>
+                <input id="anomaly-name" name="name" type="text" required placeholder="Agent designation" />
+              </div>
+
+              <div className={styles.anomalyField}>
+                <label htmlFor="anomaly-email">Your email</label>
+                <input id="anomaly-email" name="email" type="email" required placeholder="agent@securemail.com" />
+              </div>
+
+              <div className={styles.anomalyField}>
+                <label htmlFor="anomaly-type">Anomaly description</label>
+                <select id="anomaly-type" name="anomaly_description" required defaultValue="">
+                  <option value="" disabled>
+                    Select anomaly type
+                  </option>
+                  <option value="Missing Sock Phenomenon">Missing Sock Phenomenon</option>
+                  <option value="Phantom Notification">Phantom Notification</option>
+                  <option value="Queue Paradox">Queue Paradox</option>
+                  <option value="Alarm Clock Desync">Alarm Clock Desync</option>
+                  <option value="Pavement Tile Wobble">Pavement Tile Wobble</option>
+                  <option value="Pen Click Fatigue">Pen Click Fatigue</option>
+                </select>
+              </div>
+
+              <p className={styles.anomalyLegal}>
+                By submitting this observation you acknowledge that minor inconsistencies in daily routine may
+                constitute a threat to national caffeinated cohesion. Your report will be reviewed by a Junior
+                Analyst at a time of our choosing.
+              </p>
+
+              <button type="submit" className={styles.anomalySubmit}>
+                SUBMIT OBSERVATION
+              </button>
+            </form>
+
+            {anomalySubmitted && (
+              <p className={styles.confirmation}>
+                We will notify you of any important information updates in due course. S.E.N.I.L.E. appreciates
+                your compliance.
+              </p>
+            )}
+          </article>
 
           {activeModule === "uv" && (
             <article ref={activeModuleRef} className={styles.signCard}>

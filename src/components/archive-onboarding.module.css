@@ -342,6 +342,177 @@
   align-items: stretch;
 }
 
+.anomalyPanel {
+  position: relative;
+  border: 1px solid #5d7b97;
+  background:
+    linear-gradient(180deg, rgba(8, 17, 27, 0.95), rgba(7, 14, 22, 0.92)),
+    url("/images/ui/ui-folder-card-texture.webp");
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    inset 0 0 0 1px rgba(170, 208, 237, 0.15),
+    0 10px 28px rgba(2, 7, 12, 0.5);
+  padding: clamp(1rem, 2vw, 1.35rem);
+  overflow: hidden;
+}
+
+.anomalyPanel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(119, 181, 233, 0.1), transparent 26%),
+    radial-gradient(circle at 85% 18%, rgba(125, 184, 228, 0.14), transparent 36%);
+}
+
+.anomalyHeader {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.anomalyAlert {
+  margin: 0;
+  color: #b9d8f2;
+  font-size: 0.93rem;
+  letter-spacing: 0.03em;
+}
+
+.anomalyStamp {
+  margin: 0;
+  width: fit-content;
+  border: 1px solid rgba(116, 164, 200, 0.72);
+  background: rgba(10, 20, 32, 0.82);
+  color: #98c4e8;
+  padding: 0.22rem 0.42rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.anomalyPanel h3 {
+  margin: 0.1rem 0 0;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  letter-spacing: 0.06em;
+  color: #e3effa;
+  text-transform: uppercase;
+}
+
+.anomalyLead {
+  margin: 0.2rem 0 0;
+  color: #c7dced;
+  line-height: 1.34;
+  font-size: 1.02rem;
+}
+
+.anomalyForm {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  align-items: start;
+}
+
+.anomalyField {
+  display: grid;
+  gap: 0.34rem;
+  align-content: start;
+}
+
+.anomalyField label {
+  color: #a7c4dc;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.73rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.anomalyField input,
+.anomalyField select {
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+  border: 1px solid #5f7f9a;
+  background: linear-gradient(180deg, rgba(8, 14, 22, 0.96), rgba(7, 13, 21, 0.96));
+  color: #e1edf8;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  line-height: 1.2;
+}
+
+.anomalyField select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.anomalyField input::placeholder {
+  color: #89abc8;
+}
+
+.anomalyField input:focus,
+.anomalyField select:focus {
+  outline: none;
+  border-color: #9cc9ea;
+  box-shadow: 0 0 0 2px rgba(129, 188, 236, 0.25);
+}
+
+.anomalyLegal {
+  grid-column: 1 / -1;
+  margin: 0.08rem 0 0;
+  border: 1px dashed rgba(120, 156, 185, 0.42);
+  background: rgba(6, 13, 20, 0.58);
+  padding: 0.55rem 0.65rem;
+  color: #b6cadc;
+  line-height: 1.38;
+  font-size: 0.9rem;
+}
+
+.anomalySubmit {
+  justify-self: start;
+  min-height: 44px;
+  border: 1px solid #98c4e8;
+  background: linear-gradient(180deg, #17324b, #12273a);
+  color: #d4ebff;
+  padding: 0.55rem 1rem;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow:
+    inset 0 0 0 1px rgba(185, 221, 249, 0.24),
+    0 5px 18px rgba(8, 21, 33, 0.5);
+}
+
+@media (max-width: 1100px) {
+  .anomalyForm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.anomalySubmit:hover {
+  background: linear-gradient(180deg, #1c3a56, #143047);
+}
+
+.anomalySubmit:focus-visible {
+  outline: 2px solid #a7d3f3;
+  outline-offset: 2px;
+}
+
+.honeypotField {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .shelfCard,
 .signCard,
 .sectionCard,
@@ -777,6 +948,14 @@ button.drawerFace {
   color: #b8d8b4;
 }
 
+.anomalyPanel .confirmation {
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(125, 178, 141, 0.5);
+  background: rgba(14, 32, 24, 0.42);
+  padding: 0.55rem 0.65rem;
+}
+
 .interactiveCard {
   margin-top: 0.7rem;
 }
@@ -948,6 +1127,24 @@ button.drawerFace {
   .roomGrid {
     grid-template-columns: 1fr;
     gap: 0.7rem;
+  }
+
+  .anomalyForm {
+    grid-template-columns: 1fr;
+    gap: 0.62rem;
+  }
+
+  .anomalyPanel {
+    padding: 0.85rem 0.8rem;
+  }
+
+  .anomalyLead {
+    font-size: 0.94rem;
+  }
+
+  .anomalySubmit {
+    width: 100%;
+    justify-self: stretch;
   }
 
   .shelfCard {
