@@ -75,13 +75,13 @@ const logoTimeline = [
 
 export default function AgencyOverviewPage() {
   const router = useRouter();
-  const [validated, setValidated] = useState<boolean>(() => loadArchiveState().agencyValidated);
+  const [sessionActivated, setSessionActivated] = useState(false);
   const [doorOpen, setDoorOpen] = useState(false);
   const [scanning, setScanning] = useState(false);
   const [statusMessage, setStatusMessage] = useState(() => {
     const current = loadArchiveState();
     if (current.agencyValidated) {
-      return "Internal systems already validated. Equipment Division available.";
+      return "Credential recognised. Tap reader to re-validate and open access.";
     }
     return current.keycardCollected
       ? "Issued keycard detected in operative inventory. Ready for validation."
@@ -91,13 +91,9 @@ export default function AgencyOverviewPage() {
 
   const handleValidate = () => {
     const current = loadArchiveState();
-    if (current.agencyValidated) {
-      setValidated(true);
-      setDoorOpen(true);
-      setStatusMessage("Internal systems already validated. Equipment Division available.");
-      return;
-    }
     if (!current.keycardCollected) {
+      setSessionActivated(false);
+      setDoorOpen(false);
       setStatusMessage(
         "Clearance Level Insufficient. Did you pick up the keycard from the Director Archive Cabinet?",
       );
@@ -107,12 +103,14 @@ export default function AgencyOverviewPage() {
     setScanning(true);
     setStatusMessage("Authenticating issued keycard...");
     window.setTimeout(() => {
-      const next = { ...loadArchiveState(), agencyValidated: true };
-      saveArchiveState(next);
-      setValidated(true);
+      const latest = loadArchiveState();
+      if (!latest.agencyValidated) {
+        saveArchiveState({ ...latest, agencyValidated: true });
+      }
+      setSessionActivated(true);
       setDoorOpen(true);
       setScanning(false);
-      setStatusMessage("Access granted. Equipment Division unlocked.");
+      setStatusMessage("Reader validated. Door open. Entry control now active.");
     }, 900);
   };
 
@@ -140,29 +138,30 @@ export default function AgencyOverviewPage() {
                   <button
                     type="button"
                     className={`${styles.keypadButton} ${scanning ? styles.keypadButtonScanning : ""} ${
-                      validated ? styles.keypadButtonValidated : ""
+                      sessionActivated ? styles.keypadButtonValidated : ""
                     }`}
                     onClick={handleValidate}
                     aria-label="Validate keycard for internal systems"
                     disabled={scanning}
                   >
-                    {validated ? "VALIDATED" : "PRESENT KEYCARD"}
+                    {sessionActivated ? "VALIDATED" : "PRESENT KEYCARD"}
                   </button>
                   <div className={styles.keypadStatus}>
                     <p className={styles.keypadStatusLabel}>Internal Reader</p>
                     <p className={styles.keypadStatusText}>{statusMessage}</p>
                     <button type="button" className={styles.keypadAction} onClick={handleValidate} disabled={scanning}>
-                      {scanning ? "Validating..." : validated ? "Validation Confirmed" : "Use Keycard Reader"}
+                      {scanning ? "Validating..." : sessionActivated ? "Validation Confirmed" : "Use Keycard Reader"}
                     </button>
-                    {validated && (
-                      <button
-                        type="button"
-                        className={styles.keypadActionPrimary}
-                        onClick={handleEnterDivision}
-                      >
-                        Enter Equipment Division
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      className={`${styles.keypadActionPrimary} ${
+                        sessionActivated ? styles.keypadActionPrimaryActive : styles.keypadActionPrimaryInactive
+                      }`}
+                      onClick={handleEnterDivision}
+                      disabled={!sessionActivated}
+                    >
+                      Enter Equipment Division
+                    </button>
                   </div>
                 </div>
 
