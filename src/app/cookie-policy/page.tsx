@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 import styles from "@/components/room-pages.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Cookie Policy",
   description:
     "Cookie and browser storage policy, including essential progression storage for returning S.E.N.I.L.E. visitors.",
-  alternates: { canonical: "/cookie-policy" },
-};
+  path: "/cookie-policy",
+});
 
 export default function CookiePolicyPage() {
   return (
     <main className={styles.pageWrap}>
       <section className={styles.sectionCard}>
-        <h2>Cookie Policy</h2>
+        <h1>Cookie Policy</h1>
         <p className={styles.sectionIntro}>How cookies and browser storage are used across the archive.</p>
         <p className={styles.policyMeta}>Last updated: 15 February 2026</p>
 

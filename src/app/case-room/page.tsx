@@ -67,7 +67,7 @@ export default function CaseRoomPage() {
     <RoomGate roomId="case-room">
       <main className={styles.pageWrap}>
         <section className={styles.sectionCard}>
-          <h2>Case Room</h2>
+          <h1>Case Room</h1>
           <p className={styles.sectionIntro}>Cabinet index available. Open drawers to inspect files.</p>
           {notice && <p className={styles.openNotice}>{notice}</p>}
 

@@ -3,12 +3,13 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { AnalyticsLoader } from "@/components/analytics-loader";
+import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://senile.online"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "S.E.N.I.L.E. Interactive Archive",
+    default: SITE_NAME,
     template: "%s | S.E.N.I.L.E.",
   },
   description:
@@ -22,16 +23,9 @@ export const metadata: Metadata = {
     "Webtoon",
     "domestic anomalies",
   ],
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
-    url: "https://senile.online",
-    siteName: "S.E.N.I.L.E. Interactive Archive",
-    title: "S.E.N.I.L.E. Interactive Archive",
-    description:
-      "An immersive archive world tracking minor domestic anomalies with catastrophic seriousness.",
+    siteName: SITE_NAME,
     images: [
       {
         url: "/opengraph-image.png",
@@ -43,9 +37,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "S.E.N.I.L.E. Interactive Archive",
-    description:
-      "Explore case files, containment records, and public disclosure editions from the S.E.N.I.L.E. universe.",
     images: ["/twitter-image.png"],
   },
   robots: {
@@ -81,16 +72,16 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "S.E.N.I.L.E.",
-    url: "https://senile.online",
-    logo: "https://senile.online/icon.png",
+    url: SITE_URL,
+    logo: `${SITE_URL}/icon.png`,
     sameAs: ["https://www.instagram.com/senile.06/", "https://www.tiktok.com/@senile06"],
   };
 
   const siteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "S.E.N.I.L.E. Interactive Archive",
-    url: "https://senile.online",
+    name: SITE_NAME,
+    url: SITE_URL,
     inLanguage: "en",
   };
 

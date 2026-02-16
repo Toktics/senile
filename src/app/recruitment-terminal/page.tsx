@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { siteCopy } from "@/content/archive-data";
+import { buildPageMetadata } from "@/lib/seo";
 import styles from "@/components/room-pages.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Recruitment Terminal",
   description:
     "Submit a provisional field operative application for archive updates, containment notices, and authorised briefings.",
-  alternates: { canonical: "/recruitment-terminal" },
-};
+  path: "/recruitment-terminal",
+});
 
 type RecruitmentTerminalPageProps = {
   searchParams?: Promise<{
@@ -25,7 +26,7 @@ export default async function RecruitmentTerminalPage({ searchParams }: Recruitm
       <section className={styles.sectionCard}>
         <div className={styles.recruitmentLayout}>
           <div className={styles.recruitmentLeft}>
-            <h2>RECRUITMENT TERMINAL</h2>
+            <h1>RECRUITMENT TERMINAL</h1>
             <p className={styles.sectionIntro}>Provisional Field Operative Application</p>
             <p>
               Applicants are invited to submit credentials for limited clearance access to archive

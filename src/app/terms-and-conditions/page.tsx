@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 import styles from "@/components/room-pages.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Terms & Conditions",
   description: "Terms governing access and use of the S.E.N.I.L.E. Interactive Archive.",
-  alternates: { canonical: "/terms-and-conditions" },
-};
+  path: "/terms-and-conditions",
+});
 
 export default function TermsAndConditionsPage() {
   return (
     <main className={styles.pageWrap}>
       <section className={styles.sectionCard}>
-        <h2>Terms &amp; Conditions</h2>
+        <h1>Terms &amp; Conditions</h1>
         <p className={styles.sectionIntro}>Terms governing access and use of the S.E.N.I.L.E. Interactive Archive.</p>
         <p className={styles.policyMeta}>Last updated: 15 February 2026</p>
 

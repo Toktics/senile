@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 import styles from "@/components/room-pages.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Privacy Policy",
   description: "Privacy policy for the S.E.N.I.L.E. Interactive Archive and related services.",
-  alternates: { canonical: "/privacy-policy" },
-};
+  path: "/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
   return (
     <main className={styles.pageWrap}>
       <section className={styles.sectionCard}>
-        <h2>Privacy Policy</h2>
+        <h1>Privacy Policy</h1>
         <p className={styles.sectionIntro}>How personal data is used across the S.E.N.I.L.E. Interactive Archive.</p>
         <p className={styles.policyMeta}>Last updated: 15 February 2026</p>
 

@@ -29,7 +29,7 @@ export default function EquipmentDivisionPage() {
     <RoomGate roomId="equipment-division">
       <main className={styles.pageWrap}>
         <section className={styles.sectionCard}>
-          <h2>Equipment Division</h2>
+          <h1>Equipment Division</h1>
           <p className={styles.sectionIntro}>{issueMessage}</p>
           {!decoderIssued && (
             <button type="button" className={styles.secondaryButton} onClick={handleIssueDecoder}>
