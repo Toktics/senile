@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import {
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -148,6 +149,13 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
   const mapSurfaceRef = useRef<HTMLDivElement | null>(null);
   const detailCardRef = useRef<HTMLElement | null>(null);
   const dragRef = useRef<{ startX: number; startY: number; panX: number; panY: number } | null>(null);
+  const pointerPositionsRef = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const pinchRef = useRef<{ startDistance: number; startZoom: number } | null>(null);
+  const zoomRef = useRef(zoom);
+
+  useEffect(() => {
+    zoomRef.current = zoom;
+  }, [zoom]);
 
   const activeCountry = useMemo(
     () => countryNodes.find((node) => node.id === activeCountryId) ?? initialCountry,
@@ -193,12 +201,31 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
       const offscreenTop = rect.top < 0;
       const offscreenBottom = rect.bottom > window.innerHeight;
       if (offscreenTop || offscreenBottom) {
-        detail.scrollIntoView({ behavior: "smooth", block: "start" });
+        const targetTop = window.scrollY + rect.top - 84;
+        window.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: "smooth",
+        });
       }
     }, 80);
   };
 
   const handleMapPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    pointerPositionsRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (pointerPositionsRef.current.size === 2) {
+      const [first, second] = Array.from(pointerPositionsRef.current.values());
+      const dx = second.x - first.x;
+      const dy = second.y - first.y;
+      pinchRef.current = {
+        startDistance: Math.hypot(dx, dy),
+        startZoom: zoomRef.current,
+      };
+      dragRef.current = null;
+      setDragging(false);
+      return;
+    }
+
     if (zoom <= 1) return;
     event.currentTarget.setPointerCapture(event.pointerId);
     setDragging(true);
@@ -211,6 +238,22 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
   };
 
   const handleMapPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (pointerPositionsRef.current.has(event.pointerId)) {
+      pointerPositionsRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    }
+
+    if (pointerPositionsRef.current.size === 2 && pinchRef.current) {
+      const [first, second] = Array.from(pointerPositionsRef.current.values());
+      const dx = second.x - first.x;
+      const dy = second.y - first.y;
+      const currentDistance = Math.hypot(dx, dy);
+      if (currentDistance > 0) {
+        const scale = currentDistance / pinchRef.current.startDistance;
+        applyZoom(pinchRef.current.startZoom * scale);
+      }
+      return;
+    }
+
     if (!dragRef.current || zoom <= 1) return;
     const deltaX = event.clientX - dragRef.current.startX;
     const deltaY = event.clientY - dragRef.current.startY;
@@ -218,7 +261,20 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
     setPan(next);
   };
 
+  const handleMapPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    pointerPositionsRef.current.delete(event.pointerId);
+    if (pointerPositionsRef.current.size < 2) {
+      pinchRef.current = null;
+    }
+    if (pointerPositionsRef.current.size === 0) {
+      setDragging(false);
+      dragRef.current = null;
+    }
+  };
+
   const endDrag = () => {
+    pointerPositionsRef.current.clear();
+    pinchRef.current = null;
     setDragging(false);
     dragRef.current = null;
   };
@@ -261,7 +317,7 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
           aria-label="Global map with agent markers"
           onPointerDown={handleMapPointerDown}
           onPointerMove={handleMapPointerMove}
-          onPointerUp={endDrag}
+          onPointerUp={handleMapPointerUp}
           onPointerCancel={endDrag}
           onPointerLeave={endDrag}
           onWheel={handleWheelZoom}
