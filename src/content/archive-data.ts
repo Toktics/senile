@@ -344,10 +344,10 @@ export const gadgets: Gadget[] = [
     usageProtocol:
       "Sweep clockwise from dryer perimeter, pause at basket edges, and log signal spikes over 12 resonance units.",
     image: {
-      src: "/images/equipment/sock-resonance-scanner-card.webp",
-      alt: "Equipment card for Sock Resonance Scanner",
-      width: 800,
-      height: 1200,
+      src: "/images/equipment/sock-resonance-scanner.webp",
+      alt: "Sock Resonance Scanner object render",
+      width: 400,
+      height: 800,
     },
   },
   {
@@ -358,6 +358,12 @@ export const gadgets: Gadget[] = [
       "Low-noise thermal equalisation plate that suppresses unilateral heat drift during rest cycles.",
     usageProtocol:
       "Insert beneath affected pillow quadrant and monitor differential readings every 15 minutes.",
+    image: {
+      src: "/images/equipment/thermal-pillow-stabiliser.webp",
+      alt: "Thermal Pillow Stabiliser object render",
+      width: 400,
+      height: 800,
+    },
   },
   {
     id: "micro-object-recovery-unit",
@@ -367,6 +373,12 @@ export const gadgets: Gadget[] = [
       "Compact magnetic and optical retrieval rig for items displaced beyond expected domestic vectors.",
     usageProtocol:
       "Deploy under sofa and shelf cavities before initiating full-room search escalation.",
+    image: {
+      src: "/images/equipment/micro-object-recovery-unit.webp",
+      alt: "Micro-Object Recovery Unit object render",
+      width: 400,
+      height: 800,
+    },
   },
   {
     id: "sole-grip-paste",
@@ -376,6 +388,12 @@ export const gadgets: Gadget[] = [
       "Surface adhesive compound designed to reduce involuntary household slip events and trajectory drift.",
     usageProtocol:
       "Apply to footwear contact points in 2 mm strips. Replace after five anomaly-adjacent steps.",
+    image: {
+      src: "/images/equipment/sole-grip-paste.webp",
+      alt: "Sole Grip Paste object render",
+      width: 400,
+      height: 800,
+    },
   },
 ];
 
