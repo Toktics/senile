@@ -59,7 +59,7 @@
   overflow: hidden;
   border: 1px solid #2f4358;
   touch-action: none;
-  cursor: default;
+  cursor: grab;
 }
 
 .mapSurfaceDragging {
@@ -70,7 +70,7 @@
   position: absolute;
   inset: 0;
   transform-origin: center center;
-  transition: transform 160ms ease;
+  will-change: transform;
   background:
     radial-gradient(circle at 14% 30%, rgba(112, 144, 175, 0.15), transparent 20%),
     radial-gradient(circle at 48% 38%, rgba(112, 144, 175, 0.12), transparent 19%),

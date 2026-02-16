@@ -99,6 +99,8 @@ const agentDossierById: Record<string, string> = {
 };
 
 const CLUSTER_TO_SPREAD_ZOOM = 1.22;
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 4;
 
 function markerOffset(index: number, total: number, spreadRadius: number) {
   if (total <= 1 || spreadRadius <= 0) {
@@ -180,7 +182,7 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
   };
 
   const applyZoom = (nextZoom: number) => {
-    const clamped = Math.min(2.4, Math.max(1, Number(nextZoom.toFixed(2))));
+    const clamped = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, Number(nextZoom.toFixed(2))));
     setZoom(clamped);
     setPan((current) => clampPan(current.x, current.y, clamped));
     if (clamped <= 1) {
@@ -227,6 +229,7 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
     }
 
     if (zoom <= 1) return;
+    event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
     setDragging(true);
     dragRef.current = {
@@ -281,21 +284,21 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
 
   const handleWheelZoom = (event: ReactWheelEvent<HTMLDivElement>) => {
     event.preventDefault();
-    const next = zoom + (event.deltaY < 0 ? 0.12 : -0.12);
+    const next = zoom + (event.deltaY < 0 ? 0.16 : -0.16);
     applyZoom(next);
   };
 
-  const spreadRadius = Math.min(16, Math.max(0, Math.round((zoom - CLUSTER_TO_SPREAD_ZOOM) * 34)));
+  const spreadRadius = Math.min(46, Math.max(0, Math.round((zoom - CLUSTER_TO_SPREAD_ZOOM) * 54)));
 
   return (
     <section className={styles.mapSection} aria-label="Global deployment map">
       <div className={styles.mapFrame}>
         <div className={styles.mapToolbar}>
-          <button type="button" className={styles.zoomButton} onClick={() => applyZoom(zoom - 0.2)}>
+          <button type="button" className={styles.zoomButton} onClick={() => applyZoom(zoom - 0.25)}>
             -
           </button>
           <span className={styles.zoomReadout}>{Math.round(zoom * 100)}%</span>
-          <button type="button" className={styles.zoomButton} onClick={() => applyZoom(zoom + 0.2)}>
+          <button type="button" className={styles.zoomButton} onClick={() => applyZoom(zoom + 0.25)}>
             +
           </button>
           <button
@@ -319,7 +322,6 @@ export function AgentGlobalMap({ agents }: { agents: Character[] }) {
           onPointerMove={handleMapPointerMove}
           onPointerUp={handleMapPointerUp}
           onPointerCancel={endDrag}
-          onPointerLeave={endDrag}
           onWheel={handleWheelZoom}
         >
           <div className={styles.mapCanvas} style={{ transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})` }}>
