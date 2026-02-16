@@ -81,11 +81,12 @@ export function ArchiveExperience() {
     <>
       <section className={styles.entrySequence} aria-label="Power Restoration">
         <Image
-          src="/images/scenes/archive-room-wide-v1.webp"
+          src="/images/scenes/hero.png"
           alt="Archive headquarters wide interior view"
           fill
           className={styles.entryBackdrop}
           sizes="100vw"
+          quality={72}
           priority
         />
         <div className={`${styles.fluorescentGlow} ${state.powerRestored ? styles.restored : styles.dark}`} aria-hidden="true" />

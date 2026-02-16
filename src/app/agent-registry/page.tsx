@@ -1,9 +1,19 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { RoomGate } from "@/components/room-gate";
-import { AgentGlobalMap } from "@/components/agent-global-map";
 import { characters } from "@/content/archive-data";
 import { buildPageMetadata } from "@/lib/seo";
 import styles from "@/components/room-pages.module.css";
+
+const AgentGlobalMap = dynamic(
+  () => import("@/components/agent-global-map").then((mod) => mod.AgentGlobalMap),
+  {
+    ssr: false,
+    loading: () => (
+      <p className={styles.sectionIntro}>Loading deployment map...</p>
+    ),
+  },
+);
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Agent Registry",

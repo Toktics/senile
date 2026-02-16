@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import dynamic from "next/dynamic";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { CookieConsentBanner } from "@/components/cookie-consent-banner";
-import { AnalyticsLoader } from "@/components/analytics-loader";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
+
+const CookieConsentBanner = dynamic(
+  () => import("@/components/cookie-consent-banner").then((mod) => mod.CookieConsentBanner),
+  { ssr: false },
+);
+const AnalyticsLoader = dynamic(
+  () => import("@/components/analytics-loader").then((mod) => mod.AnalyticsLoader),
+  { ssr: false },
+);
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
