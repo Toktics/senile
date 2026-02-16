@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RoomGate } from "@/components/room-gate";
 import { loadArchiveState, saveArchiveState } from "@/lib/archive-state";
@@ -75,10 +75,7 @@ const logoTimeline = [
 
 export default function AgencyOverviewPage() {
   const router = useRouter();
-  const [sessionActivated, setSessionActivated] = useState(false);
-  const [doorOpen, setDoorOpen] = useState(false);
-  const [scanning, setScanning] = useState(false);
-  const [statusMessage, setStatusMessage] = useState(() => {
+  const getIdleStatusMessage = () => {
     const current = loadArchiveState();
     if (current.agencyValidated) {
       return "Credential recognised. Tap reader to re-validate and open access.";
@@ -86,8 +83,25 @@ export default function AgencyOverviewPage() {
     return current.keycardCollected
       ? "Issued keycard detected in operative inventory. Ready for validation."
       : "Clearance credential not detected. Retrieve issued keycard from Director Archive Cabinet.";
-  });
+  };
+  const [sessionActivated, setSessionActivated] = useState(false);
+  const [doorOpen, setDoorOpen] = useState(false);
+  const [scanning, setScanning] = useState(false);
+  const [statusMessage, setStatusMessage] = useState(getIdleStatusMessage);
   const [activeFounderId, setActiveFounderId] = useState<string>(founders[0].id);
+
+  useEffect(() => {
+    const resetSessionState = () => {
+      setScanning(false);
+      setSessionActivated(false);
+      setDoorOpen(false);
+      setStatusMessage(getIdleStatusMessage());
+    };
+
+    resetSessionState();
+    window.addEventListener("pageshow", resetSessionState);
+    return () => window.removeEventListener("pageshow", resetSessionState);
+  }, []);
 
   const handleValidate = () => {
     const current = loadArchiveState();
