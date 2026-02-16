@@ -15,7 +15,13 @@ export function ArchiveExperience() {
   const [directorCodeMessage, setDirectorCodeMessage] = useState("");
   const [activeModule, setActiveModule] = useState<"cupboard" | "uv" | "cabinet" | "sublevel" | "memo" | null>(null);
   const [showModuleDenied, setShowModuleDenied] = useState(false);
-  const [anomalySubmitted, setAnomalySubmitted] = useState(false);
+  const [anomalySubmitted] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+    const params = new URLSearchParams(window.location.search);
+    return params.get("anomaly_submitted") === "1";
+  });
   const activeModuleRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -29,9 +35,6 @@ export function ArchiveExperience() {
       return;
     }
 
-    if (params.get("anomaly_submitted") === "1") {
-      setAnomalySubmitted(true);
-    }
   }, []);
 
   useEffect(() => {
@@ -81,12 +84,11 @@ export function ArchiveExperience() {
     <>
       <section className={styles.entrySequence} aria-label="Power Restoration">
         <Image
-          src="/images/scenes/hero.png"
+          src="/images/scenes/hero.webp"
           alt="Archive headquarters wide interior view"
           fill
           className={styles.entryBackdrop}
           sizes="100vw"
-          quality={72}
           priority
         />
         <div className={`${styles.fluorescentGlow} ${state.powerRestored ? styles.restored : styles.dark}`} aria-hidden="true" />
