@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, type CSSProperties } from "react";
 import { RoomGate } from "@/components/room-gate";
 import { gadgets } from "@/content/archive-data";
 import { loadArchiveState, saveArchiveState } from "@/lib/archive-state";
@@ -40,16 +40,46 @@ const SPEAKER_NAME: Record<BriefingSpeaker, string> = {
   decoder: "Decoder Station",
 };
 
-const SCENE_EQUIPMENT_HOTSPOTS: Array<{
+const SCENE_EQUIPMENT_ITEMS: Array<{
   gadgetId: string;
-  label: string;
+  objectSrc: string;
+  objectAlt: string;
   top: string;
   left: string;
+  width: number;
 }> = [
-  { gadgetId: "thermal-pillow-stabiliser", label: "Thermal Chamber", top: "50%", left: "57%" },
-  { gadgetId: "micro-object-recovery-unit", label: "Recovery Unit", top: "59%", left: "40%" },
-  { gadgetId: "sock-resonance-scanner", label: "Resonance Scanner", top: "73%", left: "47%" },
-  { gadgetId: "sole-grip-paste", label: "Sole-Grip Paste", top: "73%", left: "54%" },
+  {
+    gadgetId: "thermal-pillow-stabiliser",
+    objectSrc: "/images/equipment/thermal-pillow-stabiliser.webp",
+    objectAlt: "Thermal Pillow Stabiliser",
+    top: "30%",
+    left: "66%",
+    width: 48,
+  },
+  {
+    gadgetId: "micro-object-recovery-unit",
+    objectSrc: "/images/equipment/micro-object-recovery-unit.webp",
+    objectAlt: "Micro-Object Recovery Unit",
+    top: "48%",
+    left: "45%",
+    width: 42,
+  },
+  {
+    gadgetId: "sock-resonance-scanner",
+    objectSrc: "/images/equipment/sock-resonance-scanner.webp",
+    objectAlt: "Sock Resonance Scanner",
+    top: "57%",
+    left: "30.5%",
+    width: 44,
+  },
+  {
+    gadgetId: "sole-grip-paste",
+    objectSrc: "/images/equipment/sole-grip-paste.webp",
+    objectAlt: "Sole-Grip Paste",
+    top: "48%",
+    left: "58%",
+    width: 40,
+  },
 ];
 
 const DECODER_FILE = {
@@ -74,11 +104,17 @@ export default function EquipmentDivisionPage() {
   const [briefingStep, setBriefingStep] = useState(0);
   const [unlockedFiles, setUnlockedFiles] = useState<Set<string>>(() => {
     const state = loadArchiveState();
-    return state.decoderUnlocked ? new Set([DECODER_FILE.id]) : new Set();
+    const persisted = new Set(state.equipmentUnlocked);
+    if (state.decoderUnlocked) {
+      persisted.add(DECODER_FILE.id);
+    }
+    return persisted;
   });
   const [openFileId, setOpenFileId] = useState<string | null>(null);
   const [accessNotice, setAccessNotice] = useState<string | null>(null);
-  const [wattAnimPlaying, setWattAnimPlaying] = useState(false);
+  const [activeClip, setActiveClip] = useState<null | "watt" | "double" | "vision1" | "vision2">(null);
+  const [clipTick, setClipTick] = useState(0);
+  const [pendingBriefingStep, setPendingBriefingStep] = useState<number | null>(null);
   const wattVideoRef = useRef<HTMLVideoElement | null>(null);
   const fileEntries = [...gadgets, DECODER_FILE];
 
@@ -103,6 +139,7 @@ export default function EquipmentDivisionPage() {
     }
 
     const next = { ...current, decoderUnlocked: true };
+    next.equipmentUnlocked = Array.from(new Set([...next.equipmentUnlocked, DECODER_FILE.id]));
     saveArchiveState(next);
     setDecoderIssued(true);
     setUnlockedFiles((existing) => new Set([...existing, DECODER_FILE.id]));
@@ -110,6 +147,10 @@ export default function EquipmentDivisionPage() {
   };
 
   const unlockEquipmentFile = (gadgetId: string, label: string) => {
+    const state = loadArchiveState();
+    if (!state.equipmentUnlocked.includes(gadgetId)) {
+      saveArchiveState({ ...state, equipmentUnlocked: [...state.equipmentUnlocked, gadgetId] });
+    }
     setUnlockedFiles((current) => {
       if (current.has(gadgetId)) return current;
       const next = new Set(current);
@@ -130,14 +171,48 @@ export default function EquipmentDivisionPage() {
     setOpenFileId((current) => (current === gadgetId ? null : gadgetId));
   };
 
-  const playWattAnimation = () => {
-    setWattAnimPlaying(true);
+  const playClip = (clip: "watt" | "double" | "vision1" | "vision2") => {
+    setClipTick((value) => value + 1);
+    setActiveClip(clip);
     window.setTimeout(() => {
       if (!wattVideoRef.current) return;
+      wattVideoRef.current.currentTime = 0;
       void wattVideoRef.current.play().catch(() => {
-        setWattAnimPlaying(false);
+        setActiveClip(null);
       });
     }, 20);
+  };
+
+  const handleClipFinished = () => {
+    if (pendingBriefingStep !== null) {
+      setBriefingStep(pendingBriefingStep);
+      setPendingBriefingStep(null);
+    }
+    setActiveClip(null);
+  };
+
+  const handleAdvanceBriefing = () => {
+    if (briefingStep === 0) {
+      playClip("watt");
+      setBriefingStep(1);
+      return;
+    }
+    if (briefingStep === 1) {
+      playClip("double");
+      setPendingBriefingStep(2);
+      return;
+    }
+    if (briefingStep === 2) {
+      playClip("vision1");
+      setPendingBriefingStep(3);
+      return;
+    }
+    if (briefingStep === 3) {
+      playClip("vision2");
+      setPendingBriefingStep(4);
+      return;
+    }
+    setBriefingStep((step) => step + 1);
   };
 
   return (
@@ -155,18 +230,35 @@ export default function EquipmentDivisionPage() {
             />
           </div>
           <div className={sceneStyles.sceneOverlay}>
-            {wattAnimPlaying && (
-              <div className={sceneStyles.wattVideoOverlay}>
+            {activeClip && (
+              <div
+                className={`${sceneStyles.wattVideoOverlay} ${
+                  activeClip === "watt"
+                    ? sceneStyles.wattVideoOverlayTopRight
+                    : activeClip === "double"
+                      ? sceneStyles.wattVideoOverlayBottomLeft
+                      : sceneStyles.wattVideoOverlayBottomRight
+                }`}
+              >
                 <video
+                  key={`${activeClip}-${clipTick}`}
                   ref={wattVideoRef}
                   className={sceneStyles.wattVideo}
-                  src="/images/animation/agent-watt-zoom.mp4"
+                  src={
+                    activeClip === "watt"
+                      ? "/images/animation/agent-watt-zoom.mp4"
+                      : activeClip === "double"
+                        ? "/images/animation/agent-double-zoom.mp4"
+                        : activeClip === "vision1"
+                          ? "/images/animation/agent-vision-zoom1.mp4"
+                          : "/images/animation/agent-vision-zoom2.mp4"
+                  }
                   muted
                   playsInline
                   autoPlay
                   preload="metadata"
-                  onEnded={() => setWattAnimPlaying(false)}
-                  onError={() => setWattAnimPlaying(false)}
+                  onEnded={handleClipFinished}
+                  onError={handleClipFinished}
                 />
               </div>
             )}
@@ -198,18 +290,31 @@ export default function EquipmentDivisionPage() {
               <span className={sceneStyles.hotspotDot} />
             </div>
 
-            {SCENE_EQUIPMENT_HOTSPOTS.map((hotspot) => (
-              <button
-                key={hotspot.gadgetId}
-                type="button"
-                className={sceneStyles.equipmentHotspot}
-                style={{ top: hotspot.top, left: hotspot.left }}
-                onClick={() => unlockEquipmentFile(hotspot.gadgetId, hotspot.label)}
-                aria-label={`Unlock ${hotspot.label} file door`}
-              >
-                {hotspot.label}
-              </button>
-            ))}
+            {SCENE_EQUIPMENT_ITEMS.map((item) => {
+              const collected = unlockedFiles.has(item.gadgetId);
+              return (
+                <div
+                  key={item.gadgetId}
+                  className={`${sceneStyles.sceneItemWrap} ${collected ? sceneStyles.sceneItemCollected : ""}`}
+                  style={{ top: item.top, left: item.left, "--item-size": `${item.width}px` } as CSSProperties}
+                >
+                  <Image
+                    src={item.objectSrc}
+                    alt={item.objectAlt}
+                    width={item.width}
+                    height={item.width * 2}
+                    className={sceneStyles.sceneItemImage}
+                    sizes="(max-width: 900px) 48px, 86px"
+                  />
+                  <button
+                    type="button"
+                    className={sceneStyles.sceneItemHotspot}
+                    onClick={() => unlockEquipmentFile(item.gadgetId, item.objectAlt)}
+                    aria-label={`Collect ${item.objectAlt}`}
+                  />
+                </div>
+              );
+            })}
 
             <button
               type="button"
@@ -257,7 +362,7 @@ export default function EquipmentDivisionPage() {
                 <button
                   type="button"
                   className={sceneStyles.comicNext}
-                  onClick={() => setBriefingStep((step) => step + 1)}
+                  onClick={handleAdvanceBriefing}
                 >
                   Next
                 </button>
@@ -268,14 +373,6 @@ export default function EquipmentDivisionPage() {
               <div className={sceneStyles.sceneControls}>
                 <button type="button" className={sceneStyles.replayButton} onClick={() => setBriefingStep(0)}>
                   Replay Briefing
-                </button>
-                <button
-                  type="button"
-                  className={sceneStyles.wattAnimButton}
-                  onClick={playWattAnimation}
-                  disabled={wattAnimPlaying}
-                >
-                  {wattAnimPlaying ? "Playing..." : "Animate Agent Watt"}
                 </button>
               </div>
             )}
@@ -299,7 +396,6 @@ export default function EquipmentDivisionPage() {
             <h1>Equipment File Doors</h1>
             <p className={styles.sectionIntro}>{issueMessage}</p>
             <p className={styles.metaLine}>Select equipment in the scene to unlock each corresponding dossier.</p>
-            {accessNotice && <p className={sceneStyles.accessDenied}>{accessNotice}</p>}
             <div className={sceneStyles.fileDoorGrid}>
               {fileEntries.map((gadget) => {
                 const unlocked = unlockedFiles.has(gadget.id);
@@ -355,6 +451,17 @@ export default function EquipmentDivisionPage() {
             </div>
           </div>
         </section>
+        {accessNotice && (
+          <div className={styles.deniedBackdrop} role="dialog" aria-modal="true" aria-label="Access denied notice">
+            <div className={styles.deniedModal}>
+              <p className={styles.deniedText}>ACCESS DENIED</p>
+              <p className={styles.deniedSub}>{accessNotice}</p>
+              <button type="button" className={styles.deniedClose} onClick={() => setAccessNotice(null)}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </main>
     </RoomGate>
   );

@@ -13,6 +13,7 @@ export type ArchiveState = {
   agencyValidated: boolean;
   sublevelUnlocked: boolean;
   decoderUnlocked: boolean;
+  equipmentUnlocked: string[];
 };
 
 export const defaultState: ArchiveState = {
@@ -28,10 +29,14 @@ export const defaultState: ArchiveState = {
   agencyValidated: false,
   sublevelUnlocked: false,
   decoderUnlocked: false,
+  equipmentUnlocked: [],
 };
 
 function normalizeArchiveState(state: ArchiveState): ArchiveState {
   const next = { ...defaultState, ...state };
+  if (!Array.isArray(next.equipmentUnlocked)) {
+    next.equipmentUnlocked = [];
+  }
 
   // Progression states are monotonic: once issued/unlocked, keep dependent access stable.
   if (
