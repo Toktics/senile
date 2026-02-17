@@ -39,6 +39,20 @@
   min-height: inherit;
 }
 
+.wattVideoOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  background: rgba(4, 8, 12, 0.22);
+}
+
+.wattVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .sceneHeader {
   position: absolute;
   left: 1rem;
@@ -245,6 +259,9 @@
   position: absolute;
   left: 1rem;
   bottom: 0.9rem;
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
 }
 
 .replayButton {
@@ -262,6 +279,23 @@
 .replayButton:disabled {
   cursor: default;
   opacity: 0.58;
+}
+
+.wattAnimButton {
+  border: 1px solid #5b7d9d;
+  background: rgba(15, 33, 49, 0.92);
+  color: #c7e2f6;
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.56rem;
+  cursor: pointer;
+}
+
+.wattAnimButton:disabled {
+  opacity: 0.62;
+  cursor: default;
 }
 
 .mobileConsole {
@@ -551,6 +585,13 @@
   .sceneControls {
     left: 0.7rem;
     bottom: 4.2rem;
+    gap: 0.3rem;
+  }
+
+  .wattAnimButton,
+  .replayButton {
+    font-size: 0.56rem;
+    padding: 0.28rem 0.34rem;
   }
 
   .mobileConsole {

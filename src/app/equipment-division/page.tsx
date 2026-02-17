@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { RoomGate } from "@/components/room-gate";
 import { gadgets } from "@/content/archive-data";
 import { loadArchiveState, saveArchiveState } from "@/lib/archive-state";
@@ -78,6 +78,8 @@ export default function EquipmentDivisionPage() {
   });
   const [openFileId, setOpenFileId] = useState<string | null>(null);
   const [accessNotice, setAccessNotice] = useState<string | null>(null);
+  const [wattAnimPlaying, setWattAnimPlaying] = useState(false);
+  const wattVideoRef = useRef<HTMLVideoElement | null>(null);
   const fileEntries = [...gadgets, DECODER_FILE];
 
   const briefingComplete = briefingStep >= BRIEFING_STEPS.length;
@@ -128,6 +130,16 @@ export default function EquipmentDivisionPage() {
     setOpenFileId((current) => (current === gadgetId ? null : gadgetId));
   };
 
+  const playWattAnimation = () => {
+    setWattAnimPlaying(true);
+    window.setTimeout(() => {
+      if (!wattVideoRef.current) return;
+      void wattVideoRef.current.play().catch(() => {
+        setWattAnimPlaying(false);
+      });
+    }, 20);
+  };
+
   return (
     <RoomGate roomId="equipment-division">
       <main className={`${styles.pageWrap} ${sceneStyles.equipmentPage}`}>
@@ -143,6 +155,21 @@ export default function EquipmentDivisionPage() {
             />
           </div>
           <div className={sceneStyles.sceneOverlay}>
+            {wattAnimPlaying && (
+              <div className={sceneStyles.wattVideoOverlay}>
+                <video
+                  ref={wattVideoRef}
+                  className={sceneStyles.wattVideo}
+                  src="/images/animation/agent-watt-zoom.mp4"
+                  muted
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                  onEnded={() => setWattAnimPlaying(false)}
+                  onError={() => setWattAnimPlaying(false)}
+                />
+              </div>
+            )}
             <div className={sceneStyles.sceneHeader}>
               <p className={sceneStyles.scenePlaque}>Equipment Division // Q-Lab Test Floor</p>
               <div className={sceneStyles.statusChip}>
@@ -241,6 +268,14 @@ export default function EquipmentDivisionPage() {
               <div className={sceneStyles.sceneControls}>
                 <button type="button" className={sceneStyles.replayButton} onClick={() => setBriefingStep(0)}>
                   Replay Briefing
+                </button>
+                <button
+                  type="button"
+                  className={sceneStyles.wattAnimButton}
+                  onClick={playWattAnimation}
+                  disabled={wattAnimPlaying}
+                >
+                  {wattAnimPlaying ? "Playing..." : "Animate Agent Watt"}
                 </button>
               </div>
             )}
